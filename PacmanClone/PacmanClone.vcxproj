@@ -151,11 +151,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Animation.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Texture.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Texture.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="assets\BigCoin.png" />
+    <Image Include="assets\blueGhost.png" />
+    <Image Include="assets\Coin.png" />
+    <Image Include="assets\greenGhost.png" />
+    <Image Include="assets\orangeGhost.png" />
+    <Image Include="assets\PacMan.png" />
+    <Image Include="assets\redGhost.png" />
+    <Image Include="assets\yellowGhost.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

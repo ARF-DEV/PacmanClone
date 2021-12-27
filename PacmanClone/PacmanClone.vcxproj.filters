@@ -18,6 +18,12 @@
     <ClInclude Include="Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -26,5 +32,37 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="assets\BigCoin.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\blueGhost.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\Coin.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\greenGhost.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\orangeGhost.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\PacMan.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\redGhost.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\yellowGhost.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

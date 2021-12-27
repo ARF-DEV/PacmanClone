@@ -22,6 +22,12 @@ bool Game::init()
 	return true;
 }
 
+void Game::start()
+{
+	texture = new Texture("assets/blueGhost.png", pRenderer);
+	anim = new Animation(texture, 0, 0, 16, 16, 8);
+}
+
 void Game::update()
 {
 	//Events & game Logic
@@ -29,6 +35,11 @@ void Game::update()
 		if (e.type == SDL_QUIT) {
 			state = GameState::quit;
 		}
+		//else if (e.type == SDL_KEYDOWN) {
+		//	if (e.key.keysym.sym == SDLK_SPACE) {
+		//		anim->next();
+		//	}
+		//}
 	}
 }
 
@@ -40,8 +51,7 @@ void Game::draw()
 	SDL_SetRenderDrawColor(pRenderer, 0x0, 0x0, 0x0, 0x0);
 	SDL_RenderClear(pRenderer);
 
-	// Stuff
-
+	anim->draw(0, 0, pRenderer);
 
 	// Update Renderer
 	SDL_RenderPresent(pRenderer);
@@ -51,6 +61,8 @@ void Game::draw()
 void Game::run() {
 	if (!init())
 		return;
+
+	start();
 	while (state != GameState::quit) {
 		update();
 		draw();
@@ -85,7 +97,7 @@ bool Game::initWindow(std::string title, int x, int y, int w, int h, Uint8 flags
 
 bool Game::initRenderer()
 {
-	pRenderer = SDL_CreateRenderer(pWindow, -1, SDL_RENDERER_ACCELERATED);
+	pRenderer = SDL_CreateRenderer(pWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	
 	if (pRenderer == nullptr) {
 		std::cout << "Failed to create renderer : " << SDL_GetError() << '\n';
