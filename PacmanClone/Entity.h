@@ -15,11 +15,11 @@ public:
 		pos(_pos),
 		animation(_animation)
 	{}
-	void start();
-	void update(SDL_Event& e);
-	void draw(Renderer& renderer);
-private:
-	
+	virtual void start();
+	virtual void update();
+	virtual void draw(Renderer& renderer);
+
+protected:	
 	Vec2<int> pos;
 	Animation& animation;
 };
