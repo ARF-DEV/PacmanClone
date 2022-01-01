@@ -8,6 +8,8 @@
 #include"Animation.h"
 #include"Renderer.h"
 #include"Window.h"
+#include"Vec2.h"
+#include"Entity.h"
 
 class Game {
 private:
@@ -37,5 +39,7 @@ private:
 	Renderer renderer{window.getWindow(), SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC };
 	Texture texture{"assets/blueGhost.png", renderer.getRenderer() };
 	Animation anim{texture, 0, 0, 16, 16, 8};
+	Entity test{ {0, 0}, anim };
+
 };
 

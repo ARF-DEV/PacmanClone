@@ -23,7 +23,10 @@ void Game::update()
 		if (e.type == SDL_QUIT) {
 			state = GameState::quit;
 		}
+
+		test.update(e);
 	}
+
 }
 
 void Game::draw()
@@ -35,7 +38,7 @@ void Game::draw()
 	SDL_RenderClear(renderer.getRenderer());
 
 	//REAL DRAWING SHIT HAPPENS HERE
-	anim.draw(0, 0, renderer.getRenderer());
+	test.draw(renderer);
 
 	// Update Renderer
 	SDL_RenderPresent(renderer.getRenderer());
