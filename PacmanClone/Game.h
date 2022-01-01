@@ -3,8 +3,11 @@
 #include<string>
 #include<SDL.h>
 #include<SDL_image.h>
+
 #include"Texture.h"
 #include"Animation.h"
+#include"Renderer.h"
+#include"Window.h"
 
 class Game {
 private:
@@ -23,21 +26,16 @@ public:
 	~Game();
 	
 private:
-	void start();
 	void update();
 	void draw();
 	bool init();
-	bool initWindow(std::string title = "SDL_WINDOW", int x = SDL_WINDOWPOS_UNDEFINED, int y = SDL_WINDOWPOS_UNDEFINED, int w = 960, int h = 540, Uint8 flags = 0);
-	bool initRenderer();
 private:
 
-
-	SDL_Renderer* pRenderer = nullptr;
-	SDL_Window* pWindow = nullptr;
 	GameState state;
 	SDL_Event e;
-
-	Texture* texture;
-	Animation* anim;
+	Window window{"Testing"};
+	Renderer renderer{window.getWindow(), SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC };
+	Texture texture{"assets/blueGhost.png", renderer.getRenderer() };
+	Animation anim{texture, 0, 0, 16, 16, 8};
 };
 

@@ -1,27 +1,25 @@
 #pragma once
-#include"Texture.h"
 #include<SDL.h>
 #include<vector>
 
+#include"Texture.h"
+#include"Timer.h"
+
 class Animation {
 public:
-	Animation(std::string pathToTexture, SDL_Renderer* pRenderer, int x, int y, int width, int height, int nFrames);
-	Animation(Texture* pTexture, int x, int y, int width, int height, int nFrames);
-	Animation(const Animation& other) = delete;
-	Animation& operator=(const Animation& other) = delete;
-	~Animation();
+	Animation(Texture& pTexture, int x, int y, int width, int height, int nFrames);
 	void draw(int xPos, int yPos, SDL_Renderer* pRenderer);
 	void setLoop(bool loop);
 	void next();
 
 private:
 	std::vector<SDL_Rect> spriteBoxes;
-	Texture* pTexture;
+	
 	int nFrames;
 	int curFrame = 0;
-	static constexpr float nextDelay = 0.1f;
-	float timePass = 0;
-	float prev = 0;
-	float now = 0;
 	bool isLooping = true;
+
+	Texture& texture;
+	Timer timer{0.1f};
+	
 };

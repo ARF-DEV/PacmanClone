@@ -13,11 +13,12 @@ Texture::Texture()
 	vWidth(0),
 	vHeight(0)
 {
-
+	
 }
 
 Texture::Texture(std::string path, SDL_Renderer* pRenderer)
 {
+	std::cout << "texture" << std::endl;
 	loadTextureNonChroma(path, pRenderer);
 }
 
@@ -90,7 +91,7 @@ void Texture::renderTexture(int x, int y, SDL_Renderer* renderer, SDL_Rect* srcR
 }
 void Texture::renderTexture(int x, int y, int width, int height, SDL_Renderer* renderer, SDL_Rect* srcRect)
 {
-	SDL_Rect renderRect = { x, y, width, height };
+	SDL_Rect renderRect = { x, y, 32, 32 };
 	SDL_RenderCopy(renderer, pTexture, srcRect, &renderRect);
 }
 

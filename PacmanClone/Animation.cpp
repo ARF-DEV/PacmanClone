@@ -1,23 +1,11 @@
 #include "Animation.h"
 
-Animation::Animation(std::string pathToTexture, SDL_Renderer* pRenderer, int x, int y, int width, int height, int _nFrames)
+Animation::Animation(Texture& pTexture, int x, int y, int width, int height, int _nFrames)
 	:
+	texture(pTexture),
 	nFrames(_nFrames)
 {
-	pTexture = new Texture(pathToTexture, pRenderer);
-	
-	for (int i = 0; i < nFrames; i++) {
-		int rX = i * width;
-		SDL_Rect spriteBox = { x, y, width, height };
-		spriteBoxes.push_back(spriteBox);
-	}
-}
-
-Animation::Animation(Texture* pTexture, int x, int y, int width, int height, int _nFrames)
-	:
-	pTexture(pTexture),
-	nFrames(_nFrames)
-{
+	std::cout << "animation" << std::endl;
 	for (int i = 0; i < nFrames; i++) {
 		int xBox = i * width;
 		SDL_Rect spriteBox = { xBox, y, width, height };
@@ -25,22 +13,16 @@ Animation::Animation(Texture* pTexture, int x, int y, int width, int height, int
 	}
 }
 
-Animation::~Animation()
-{
-	delete pTexture;
-}
-
 void Animation::draw(int xPos, int yPos, SDL_Renderer* pRenderer)
 {
-	prev = now;
-	now = SDL_GetTicks64() / 1000.0f;
-	pTexture->renderTexture(xPos, yPos, spriteBoxes[curFrame].w, spriteBoxes[curFrame].h, pRenderer, &spriteBoxes[curFrame]);
-	if (timePass < nextDelay) {
-		timePass += (now - prev);
+	timer.updateTicks();
+	texture.renderTexture(xPos, yPos, spriteBoxes[curFrame].w, spriteBoxes[curFrame].h, pRenderer, &spriteBoxes[curFrame]);
+	if (!timer.passing()) {
+		timer.updateTimePass();
 	}
 	else {
 		next();
-		timePass = 0;
+		timer.resetTimePass();
 	}
 }
 
