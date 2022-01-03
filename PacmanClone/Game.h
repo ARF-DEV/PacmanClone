@@ -10,6 +10,7 @@
 #include"Window.h"
 #include"Vec2.h"
 #include"Pacman.h"
+#include"Map.h"
 
 class Game {
 private:
@@ -28,6 +29,21 @@ public:
 	~Game();
 	
 private:
+	void start() {
+		map.loadMapFromVector(
+			{
+				1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+				1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+				1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+				1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+				1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+				1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+				1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+				1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+				1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+				1, 1, 1, 1, 1, 1, 1, 1, 1, 1
+			}, 10, 10);
+	}
 	void update();
 	void draw();
 	bool init();
@@ -40,6 +56,7 @@ private:
 	Texture texture{"assets/blueGhost.png", renderer.getRenderer() };
 	Animation anim{texture, 0, 0, 16, 16, 8};
 	Pacman pacman{ {0, 0}, anim };
+	Map map;
 
 };
 
