@@ -10,16 +10,19 @@
 class Entity {
 public:
 	Entity() = default;
-	Entity(Vec2<int> _pos, Animation& _animation)
+	Entity(Vec2<int> _topLeft, Animation& _animation)
 		:
-		pos(_pos),
+		topLeft(_topLeft),
 		animation(_animation)
 	{}
 	virtual void start();
 	virtual void update();
+	virtual void lateUpdate();
 	virtual void draw(Renderer& renderer);
 
+	SDL_Rect getRect(); 
+	Vec2<int> getCenter();
 protected:	
-	Vec2<int> pos;
+	Vec2<int> topLeft;
 	Animation& animation;
 };

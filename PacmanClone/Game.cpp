@@ -16,6 +16,38 @@ bool Game::init()
 	return true;
 }
 
+bool Game::isColliding(SDL_Rect& rectA, SDL_Rect& rectB)
+{
+	Vec2<int> topLeftA = { rectA.x, rectA.y }, bottomRightA = { rectA.x + rectA.w, rectA.y + rectA.h };
+	Vec2<int> topLeftB = { rectB.x, rectB.y }, bottomRightB = { rectB.x + rectB.w, rectB.y + rectB.h };
+
+	if (bottomRightA.x <= topLeftB.x ||
+		topLeftA.x >= bottomRightB.x ||
+		bottomRightA.y <= topLeftB.y ||
+		topLeftA.y >= bottomRightB.y) {
+		return false;
+	}
+	return true;
+}
+
+
+void Game::start()
+{
+	map.loadMapFromVector(
+		{
+			1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+			1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+			1, 0, 1, 1, 1, 1, 1, 1, 0, 1,
+			1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+			1, 0, 1, 1, 0, 1, 1, 1, 0, 1,
+			1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+			1, 0, 1, 1, 0, 1, 0, 1, 0, 1,
+			1, 0, 1, 1, 0, 1, 1, 1, 0, 1,
+			1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+			1, 1, 1, 1, 1, 1, 1, 1, 1, 1
+		}, 10, 10);
+}
+
 void Game::update()
 {
 	//Events & game Logic
@@ -29,6 +61,11 @@ void Game::update()
 	
 }
 
+void Game::lateUpdate()
+{
+	pacman.lateUpdate();
+}
+
 void Game::draw()
 {
 	// Draw Logic
@@ -38,10 +75,6 @@ void Game::draw()
 	SDL_RenderClear(renderer.getRenderer());
 
 	//REAL DRAWING SHIT HAPPENS HERE
-	//map.draw(renderer);
-	//SDL_Rect rect = { 0,0, 32, 32 };
-	//SDL_SetRenderDrawColor( gRenderer, 0xFF, 0x00, 0x00, 0xFF );        
-	//SDL_RenderFillRect( renderer.getRenderer(), &rect );
 	map.draw(renderer);
 	pacman.draw(renderer);
 
@@ -55,6 +88,7 @@ void Game::run() {
 
 	while (state != GameState::quit) {
 		update();
+		lateUpdate();
 		draw();
 	}
 }

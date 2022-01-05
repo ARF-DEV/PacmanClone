@@ -1,8 +1,46 @@
 #include "Map.h"
 
+Map::~Map()
+{
+    delete[] tiles;
+    tiles = nullptr;
+}
+
 Tile& Map::getTile(Vec2<int> pos)
 {
-    return tiles[pos.getY() * mapWidth + pos.getX()];
+    return tiles[(pos.y - topLeft.y) / tileSize * mapWidth + (pos.x - topLeft.x) / tileSize];
+}
+
+Tile& Map::getLeftTile(Vec2<int> pos)
+{
+    return tiles[(pos.y - topLeft.y) / tileSize * mapWidth + (pos.x - topLeft.x - 1 * tileSize) / tileSize ];
+}
+
+Tile& Map::getRightTile(Vec2<int> pos)
+{
+    return tiles[(pos.y - topLeft.y) / tileSize * mapWidth + (pos.x - topLeft.x + 1 * tileSize) / tileSize];
+}
+
+Tile& Map::getTopTile(Vec2<int> pos)
+{
+    return tiles[(pos.y - topLeft.y - 1 * tileSize) / tileSize * mapWidth + (pos.x - topLeft.x) / tileSize];
+}
+
+Tile& Map::getBottomTile(Vec2<int> pos)
+{
+    return tiles[(pos.y - topLeft.y + 1 * tileSize) / tileSize * mapWidth + (pos.x - topLeft.x) / tileSize];
+}
+
+Tile& Map::getTileByIndex(int i, int j)
+{
+    return tiles[i * mapWidth + j];
+}
+
+bool Map::wallInfront(Vec2<int> pos, Vec2<int> dir)
+{
+    Vec2<int> nextTilePos = pos + (dir * tileSize / 2 );
+    Tile& nextTile = getTile(nextTilePos);
+    return nextTile.checkFlags(Tile::TileState::Wall) > 0;
 }
 
 void Map::loadMapFromImage(std::string path)
@@ -48,10 +86,11 @@ void Map::loadMapFromImage(std::string path)
             if (color.r == 255 && 
                 color.g == 255 && 
                 color.b == 255) {
-                Tile& curTile = getTile({ x, y });
+                Vec2<int> tilePos = {  x * tileSize, y * tileSize };
+                Tile& curTile = getTile(tilePos);
                 curTile.setFlags(Tile::TileState::Road);
-                curTile.setPosition({ x * tileWidth, y * tileHeight });
-                curTile.setSize(tileWidth, tileHeight);
+                curTile.setPosition(tilePos);
+                curTile.setSize(tileSize, tileSize);
             }
         }
     }
@@ -70,16 +109,18 @@ void Map::loadMapFromVector(std::vector<int> mapVector, int _mapWidth, int _mapH
     for (int y = 0; y < mapHeight; y++) {
         for (int x = 0; x < mapWidth; x++) {
             if (mapVector[y * mapWidth + x] == 0) { //ROAD
-                Tile& curTile = getTile({ x, y });
+                Vec2<int> tilePos = { topLeft.x + x * tileSize, topLeft.y + y * tileSize };
+                Tile& curTile = getTile(tilePos);
                 curTile.setFlags(Tile::TileState::Road);
-                curTile.setPosition({ x * tileWidth, y * tileHeight });
-                curTile.setSize(tileWidth, tileHeight);
+                curTile.setPosition(tilePos);
+                curTile.setSize(tileSize, tileSize);
             }
             else if (mapVector[y * mapWidth + x] == 1) { //WALL
-                Tile& curTile = getTile({ x, y });
+                Vec2<int> tilePos = { topLeft.x + x * tileSize, topLeft.y + y * tileSize };
+                Tile& curTile = getTile(tilePos);
                 curTile.setFlags(Tile::TileState::Wall);
-                curTile.setPosition({ x * tileWidth, y * tileHeight });
-                curTile.setSize(tileWidth, tileHeight);
+                curTile.setPosition(tilePos);
+                curTile.setSize(tileSize, tileSize);
             }
 
             // ADD OOTHER STUFF (COIN, ETC) LATER
@@ -92,4 +133,9 @@ void Map::draw(Renderer& renderer)
     for (int i = 0; i < mapWidth * mapHeight; i++) {
         tiles[i].draw(renderer);
     }
+}
+
+int Map::getTileSize()
+{
+    return tileSize;
 }

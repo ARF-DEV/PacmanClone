@@ -26,7 +26,9 @@ public:
 
 	Tile(uint8_t _flags)
 		:
-		flags(_flags)
+		flags(_flags),
+		width(0),
+		height(0)
 	{}
 
 	void setFlags(uint8_t _flags) {
@@ -37,6 +39,9 @@ public:
 		flags = 0;
 	}
 
+	uint8_t checkFlags(uint8_t _flags) {
+		return flags & _flags;
+	}
 	void setPosition(Vec2<int> pos) {
 		this->pos = pos;
 	}
@@ -47,14 +52,28 @@ public:
 
 	void draw(Renderer& renderer) {
 		
-		//std::cout << "draw at" << "{" << pos.getX() << "," << pos.getY() << "}" << '\n';
+		//std::cout << "draw at" << "{" << pos.x << "," << pos.y << "}" << '\n';
 		if ((flags & TileState::Wall) > 0) {
-			const SDL_Rect drawRect = { pos.getX(), pos.getY(), width, height };
+			const SDL_Rect drawRect = { pos.x, pos.y, width, height };
 			SDL_SetRenderDrawColor(renderer.getRenderer(), 0xFF, 0x0, 0x0, 0xFF);
 			SDL_RenderFillRect(renderer.getRenderer(), &drawRect);
 		}
 
+		if ((flags & TileState::Road) > 0) {
+			const SDL_Rect drawRect = { pos.x, pos.y, width, height };
+			SDL_SetRenderDrawColor(renderer.getRenderer(), 0xFF, 0x0, 0x0, 0xFF);
+			SDL_RenderDrawRect(renderer.getRenderer(), &drawRect);
+		}
+
 	}
+
+	SDL_Rect getRect() {
+		return { pos.x, pos.y, width, height };
+	}
+
+	Vec2<int> getCenter() {
+		return { pos.x + getRect().w / 2, pos.y + getRect().h / 2 };
+	}	
 private:
 	uint8_t flags;
 	Vec2<int> pos;

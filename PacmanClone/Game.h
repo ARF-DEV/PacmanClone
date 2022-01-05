@@ -29,24 +29,12 @@ public:
 	~Game();
 	
 private:
-	void start() {
-		map.loadMapFromVector(
-			{
-				1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-				1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-				1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-				1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-				1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-				1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-				1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-				1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-				1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-				1, 1, 1, 1, 1, 1, 1, 1, 1, 1
-			}, 10, 10);
-	}
+	void start();
 	void update();
+	void lateUpdate();
 	void draw();
 	bool init();
+	bool isColliding(SDL_Rect& rect1, SDL_Rect& rect2);
 private:
 
 	GameState state;
@@ -54,9 +42,9 @@ private:
 	Window window{"Testing"};
 	Renderer renderer{window.getWindow(), SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC };
 	Texture texture{"assets/blueGhost.png", renderer.getRenderer() };
-	Animation anim{texture, 0, 0, 16, 16, 8};
-	Pacman pacman{ {0, 0}, anim };
-	Map map;
+	Animation anim{texture, 0, 0, 16, 16, 32, 32, 8};
+	Map map{ {32 , 32} };
+	Pacman pacman{ {64, 64}, anim, map };
 
 };
 
