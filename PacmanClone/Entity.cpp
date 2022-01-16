@@ -17,6 +17,11 @@ SDL_Rect Entity::getRect()
 	return { topLeft.x, topLeft.y, animation.getWidth(), animation.getHeight() };
 }
 
+SDL_Rect Entity::getCollisionRect()
+{
+	return {collisionRect.x + topLeft.x, collisionRect.y + topLeft.y, collisionRect.w, collisionRect.h};
+}
+
 Vec2<int> Entity::getCenter()
 {
 	return { topLeft.x + getRect().w / 2, topLeft.y + getRect().h / 2 };

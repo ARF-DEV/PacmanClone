@@ -6,9 +6,9 @@
 
 class Coin : public Entity {
 public:
-	Coin(Vec2<int> centerPos, Animation& anim)
+	Coin(Vec2<int> centerPos, Animation& anim, SDL_Rect collisionRect)
 		:
-		Entity({0, 0}, anim)
+		Entity({0, 0}, anim, collisionRect)
 	{
 		setCenterPos(centerPos);
 	}

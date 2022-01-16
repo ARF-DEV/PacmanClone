@@ -4,9 +4,9 @@
 #include "Map.h"
 class Pacman : public Entity {
 public:
-	Pacman(Vec2<int> _topLeft, Animation& anim, Map& _map)
+	Pacman(Vec2<int> _topLeft, Animation& anim, SDL_Rect collisionRect, Map& _map)
 		:
-		Entity(_topLeft, anim),
+		Entity(_topLeft, anim, collisionRect),
 		dir({0,0}),
 		savedDir({0,0}),
 		turnPoint({-1, -1}),

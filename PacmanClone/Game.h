@@ -48,6 +48,6 @@ private:
 	Animation anim{texture, 0, 0, 16, 16, 32, 32, 8};
 	Animation coinAnim{coinSpriteSheet, 0, 0, 16, 16, 24, 24, 8};
 	Map map{ {32 , 32} };
-	Pacman pacman{ {64, 64}, anim, map };
+	Pacman pacman{ {64, 64}, anim, {8, 8, 16, 16}, map };
 };
 

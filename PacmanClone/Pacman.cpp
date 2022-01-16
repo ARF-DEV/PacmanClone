@@ -90,4 +90,7 @@ void Pacman::draw(Renderer& renderer)
 	SDL_Rect rect = {turnPoint.x, turnPoint.y, animation.getWidth()/4 ,animation.getHeight()/4};
 	SDL_SetRenderDrawColor(renderer.getRenderer(), 0x0, 0xFF, 0x0, 0xFF);
 	SDL_RenderFillRect(renderer.getRenderer(), &rect);
+	SDL_Rect renderColRect = getCollisionRect();
+	SDL_SetRenderDrawColor(renderer.getRenderer(), 0xFF, 0x0, 0x0, 0xFF);
+	SDL_RenderDrawRect(renderer.getRenderer(), &renderColRect);
 }

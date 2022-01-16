@@ -128,8 +128,8 @@ void Map::loadMapFromVector(std::vector<int> mapVector, Animation& coinAnim, int
                 curTile.setFlags(Tile::TileState::Road);
                 curTile.setPosition(tilePos);
                 curTile.setSize(tileSize, tileSize);
-
-                listOfCoin.emplace_back(curTile.getCenter(), coinAnim);
+                SDL_Rect colRect = { 8, 8, 8, 8 };
+                listOfCoin.emplace_back(curTile.getCenter(), coinAnim, colRect);
             }
             // ADD OOTHER STUFF (COIN, ETC) LATER
         }

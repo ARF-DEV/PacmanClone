@@ -38,12 +38,12 @@ void Game::start()
 			1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 			1, 0, 2, 2, 2, 0, 0, 0, 0, 1,
 			1, 0, 1, 1, 1, 1, 1, 1, 0, 1,
-			1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-			1, 0, 1, 1, 0, 1, 1, 1, 0, 1,
-			1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-			1, 0, 1, 1, 0, 1, 0, 1, 0, 1,
-			1, 0, 1, 1, 0, 1, 1, 1, 0, 1,
-			1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+			1, 0, 0, 0, 0, 0, 0, 0, 2, 1,
+			1, 0, 1, 1, 0, 1, 1, 1, 2, 1,
+			1, 0, 0, 0, 0, 0, 0, 0, 2, 1,
+			1, 0, 1, 1, 0, 1, 2, 1, 2, 1,
+			1, 0, 1, 1, 0, 1, 1, 1, 2, 1,
+			1, 0, 0, 0, 0, 0, 0, 0, 2, 1,
 			1, 1, 1, 1, 1, 1, 1, 1, 1, 1
 		}, coinAnim, 10, 10);
 
@@ -69,7 +69,7 @@ void Game::lateUpdate()
 
 	auto& listOfCoin = map.getListOfVector();
 	for (Coin& coin : listOfCoin) {
-		if (!coin.isEaten() && isColliding(pacman.getRect(), coin.getRect())) {
+		if (!coin.isEaten() && isColliding(pacman.getCollisionRect(), coin.getCollisionRect())) {
 			coin.setEaten(true);
 			++coinAmount;
 			std::cout << coinAmount << '\n';
