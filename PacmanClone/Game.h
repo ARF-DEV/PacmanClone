@@ -11,6 +11,7 @@
 #include"Vec2.h"
 #include"Pacman.h"
 #include"Map.h"
+#include"Coin.h"
 
 class Game {
 private:
@@ -34,17 +35,19 @@ private:
 	void lateUpdate();
 	void draw();
 	bool init();
-	bool isColliding(SDL_Rect& rect1, SDL_Rect& rect2);
+	bool isColliding(SDL_Rect rect1, SDL_Rect rect2);
 private:
+	int coinAmount = 0;
 
 	GameState state;
 	SDL_Event e;
 	Window window{"Testing"};
 	Renderer renderer{window.getWindow(), SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC };
 	Texture texture{"assets/blueGhost.png", renderer.getRenderer() };
+	Texture coinSpriteSheet{ "assets/BigCoin.png", renderer.getRenderer() };
 	Animation anim{texture, 0, 0, 16, 16, 32, 32, 8};
+	Animation coinAnim{coinSpriteSheet, 0, 0, 16, 16, 24, 24, 8};
 	Map map{ {32 , 32} };
 	Pacman pacman{ {64, 64}, anim, map };
-
 };
 

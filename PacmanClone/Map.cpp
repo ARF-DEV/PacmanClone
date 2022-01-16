@@ -96,7 +96,7 @@ void Map::loadMapFromImage(std::string path)
     }
 }
 
-void Map::loadMapFromVector(std::vector<int> mapVector, int _mapWidth, int _mapHeight)
+void Map::loadMapFromVector(std::vector<int> mapVector, Animation& coinAnim, int _mapWidth, int _mapHeight)
 {
     if (tiles != nullptr) {
         delete[] tiles;
@@ -122,7 +122,15 @@ void Map::loadMapFromVector(std::vector<int> mapVector, int _mapWidth, int _mapH
                 curTile.setPosition(tilePos);
                 curTile.setSize(tileSize, tileSize);
             }
+            else if (mapVector[y * mapWidth + x] == 2) {
+                Vec2<int> tilePos = { topLeft.x + x * tileSize, topLeft.y + y * tileSize };
+                Tile& curTile = getTile(tilePos);
+                curTile.setFlags(Tile::TileState::Road);
+                curTile.setPosition(tilePos);
+                curTile.setSize(tileSize, tileSize);
 
+                listOfCoin.emplace_back(curTile.getCenter(), coinAnim);
+            }
             // ADD OOTHER STUFF (COIN, ETC) LATER
         }
     }
@@ -132,6 +140,10 @@ void Map::draw(Renderer& renderer)
 {
     for (int i = 0; i < mapWidth * mapHeight; i++) {
         tiles[i].draw(renderer);
+    }
+    for (Coin& coin : listOfCoin) {
+        if (!coin.isEaten())
+            coin.draw(renderer);
     }
 }
 

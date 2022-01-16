@@ -16,7 +16,7 @@ bool Game::init()
 	return true;
 }
 
-bool Game::isColliding(SDL_Rect& rectA, SDL_Rect& rectB)
+bool Game::isColliding(SDL_Rect rectA, SDL_Rect rectB)
 {
 	Vec2<int> topLeftA = { rectA.x, rectA.y }, bottomRightA = { rectA.x + rectA.w, rectA.y + rectA.h };
 	Vec2<int> topLeftB = { rectB.x, rectB.y }, bottomRightB = { rectB.x + rectB.w, rectB.y + rectB.h };
@@ -36,7 +36,7 @@ void Game::start()
 	map.loadMapFromVector(
 		{
 			1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-			1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+			1, 0, 2, 2, 2, 0, 0, 0, 0, 1,
 			1, 0, 1, 1, 1, 1, 1, 1, 0, 1,
 			1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
 			1, 0, 1, 1, 0, 1, 1, 1, 0, 1,
@@ -45,7 +45,9 @@ void Game::start()
 			1, 0, 1, 1, 0, 1, 1, 1, 0, 1,
 			1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
 			1, 1, 1, 1, 1, 1, 1, 1, 1, 1
-		}, 10, 10);
+		}, coinAnim, 10, 10);
+
+	//pacman.setCenterPos({ 0, 0 });
 }
 
 void Game::update()
@@ -64,6 +66,15 @@ void Game::update()
 void Game::lateUpdate()
 {
 	pacman.lateUpdate();
+
+	auto& listOfCoin = map.getListOfVector();
+	for (Coin& coin : listOfCoin) {
+		if (!coin.isEaten() && isColliding(pacman.getRect(), coin.getRect())) {
+			coin.setEaten(true);
+			++coinAmount;
+			std::cout << coinAmount << '\n';
+		}
+	}
 }
 
 void Game::draw()

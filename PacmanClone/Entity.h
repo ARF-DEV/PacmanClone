@@ -22,6 +22,9 @@ public:
 
 	SDL_Rect getRect(); 
 	Vec2<int> getCenter();
+	void setCenterPos(Vec2<int> centerPos) {
+		topLeft = {centerPos.x - animation.getWidth() / 2, centerPos.y - animation.getHeight() / 2};
+	}
 protected:	
 	Vec2<int> topLeft;
 	Animation& animation;

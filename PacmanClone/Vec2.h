@@ -66,7 +66,7 @@ public:
 	}
 
 	T getLength() {
-		return sqrt(x * x + y * y);
+		return static_cast<T>(sqrt(x * x + y * y));
 	}
 public:
 	T x, y;
