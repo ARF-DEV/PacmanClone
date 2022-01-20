@@ -65,6 +65,9 @@ void Game::update()
 			if (e.key.keysym.sym == SDLK_e) {
 				gh1.setState(Ghost::GhostState::Scatter);
 			}
+			if (e.key.keysym.sym == SDLK_w) {
+				gh1.setState(Ghost::GhostState::Frightened);
+			}
 		}
 	}
 	pacman.update();

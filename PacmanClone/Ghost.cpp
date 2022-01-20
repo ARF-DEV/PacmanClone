@@ -4,7 +4,6 @@ void Ghost::setTarget(Vec2<int> targetPos)
 {
 	target = targetPos;
 }
-
 void Ghost::update()
 {
 
@@ -20,8 +19,17 @@ void Ghost::update()
 			setTarget(chaseTargetPos);
 			break;
 		case Ghost::GhostState::Frightened:
-			// Random
+		{
+			auto neighbouringRoads = map.getNeibouringRoads(getCenter());
+			neighbouringRoads.erase(std::remove_if(neighbouringRoads.begin(), neighbouringRoads.end(), [this](Tile& tile) {
+				return (tile.getCenter() - getCenter()).normalize() == -dir;
+			}), neighbouringRoads.end());
+			
+ 			std::uniform_int_distribution<int> dist{ 0, static_cast<int>(neighbouringRoads.size() - 1)};
+			int randInt = dist(rng);
+			setTarget(neighbouringRoads[randInt].getCenter());
 			break;
+		}
 		case Ghost::GhostState::Eaten:
 			// Back to Base
 			break;

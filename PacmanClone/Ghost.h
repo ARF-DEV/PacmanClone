@@ -1,6 +1,8 @@
 #pragma once
 #include <SDL.h>
 #include <unordered_map>
+#include <random>
+#include <algorithm>
 
 #include "Entity.h"
 #include "Map.h"
@@ -8,7 +10,7 @@
 #include "Animation.h"
 #include "Pacman.h"
 
-class Ghost : public Entity{
+class Ghost : public Entity {
 public:
 	enum class GhostState
 	{
@@ -45,4 +47,7 @@ private:
 	Pacman& pacman;
 	Map& map;
 	float turnThreshold = 0.5f;
+	std::random_device rd;
+	std::mt19937 rng{rd()};
+	
 };

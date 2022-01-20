@@ -38,6 +38,7 @@ public:
 	std::vector<Coin>& getListOfVector() {
 		return listOfCoin;
 	}
+	std::vector<Tile> getNeibouringRoads(Vec2<int> pos);
 private:
 	Vec2<int> topLeft;
 	std::vector<Coin> listOfCoin;

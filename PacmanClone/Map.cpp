@@ -151,3 +151,23 @@ int Map::getTileSize()
 {
     return tileSize;
 }
+
+std::vector<Tile> Map::getNeibouringRoads(Vec2<int> pos)
+{
+    std::vector<Tile> result;
+
+    if (getTopTile(pos).checkFlags(Tile::TileState::Road)) {
+        result.push_back(getTopTile(pos));
+    }
+    if (getRightTile(pos).checkFlags(Tile::TileState::Road)) {
+        result.push_back(getRightTile(pos));
+    }
+    if (getBottomTile(pos).checkFlags(Tile::TileState::Road)) {
+        result.push_back(getBottomTile(pos));
+    }
+    if (getLeftTile(pos).checkFlags(Tile::TileState::Road)) {
+        result.push_back(getLeftTile(pos));
+    }
+
+    return result;
+}
