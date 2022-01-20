@@ -60,7 +60,7 @@ void Game::update()
 		
 	}
 	pacman.update();
-	
+	gh1.update();
 }
 
 void Game::lateUpdate()
@@ -88,7 +88,7 @@ void Game::draw()
 	//REAL DRAWING SHIT HAPPENS HERE
 	map.draw(renderer);
 	pacman.draw(renderer);
-
+	gh1.draw(renderer);
 	// Update Renderer
 	SDL_RenderPresent(renderer.getRenderer());
 

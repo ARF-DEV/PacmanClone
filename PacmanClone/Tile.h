@@ -73,7 +73,8 @@ public:
 
 	Vec2<int> getCenter() {
 		return { pos.x + getRect().w / 2, pos.y + getRect().h / 2 };
-	}	
+	}
+
 private:
 	uint8_t flags;
 	Vec2<int> pos;

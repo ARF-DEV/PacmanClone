@@ -12,6 +12,7 @@
 #include"Pacman.h"
 #include"Map.h"
 #include"Coin.h"
+#include"Ghost.h"
 
 class Game {
 private:
@@ -45,9 +46,12 @@ private:
 	Renderer renderer{window.getWindow(), SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC };
 	Texture texture{"assets/blueGhost.png", renderer.getRenderer() };
 	Texture coinSpriteSheet{ "assets/BigCoin.png", renderer.getRenderer() };
+	Texture ghostSpriteSheet{ "assets/orangeGhost.png", renderer.getRenderer() };
 	Animation anim{texture, 0, 0, 16, 16, 32, 32, 8};
 	Animation coinAnim{coinSpriteSheet, 0, 0, 16, 16, 24, 24, 8};
+	Animation ghostAnim{ ghostSpriteSheet, 0, 0, 16, 16, 32, 32, 8 };
 	Map map{ {32 , 32} };
 	Pacman pacman{ {64, 64}, anim, {8, 8, 16, 16}, map };
+	Ghost gh1{ {64, 256}, ghostAnim, {8, 8, 16, 16}, map, pacman };
 };
 
