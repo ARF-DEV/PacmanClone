@@ -7,20 +7,41 @@ void Ghost::setTarget(Vec2<int> targetPos)
 
 void Ghost::update()
 {
+
+	Tile nextTargetTile;
 	if ((turnPoint - getCenter()).getLength() <= turnThreshold || turnPoint == Vec2<int>{0, 0}) {
-		setTarget(pacman.getCenter());
+		
+		switch (state)
+		{
+		case Ghost::GhostState::Chase:
+			setTarget(pacman.getCenter());
+			break;
+		case Ghost::GhostState::Scatter:
+			setTarget(chaseTargetPos);
+			break;
+		case Ghost::GhostState::Frightened:
+			// Random
+			break;
+		case Ghost::GhostState::Eaten:
+			// Back to Base
+			break;
+		default:
+			break;
+		}
+		
+
 		nextTargetTile = findNearestTile();
 		turnPoint = nextTargetTile.getCenter();
 	}
 	
-	moveToPos(nextTargetTile.getCenter());
+	moveToPos(turnPoint);
 }
 
 void Ghost::draw(Renderer& renderer)
 {
 	Entity::draw(renderer);
 
-	SDL_Rect rect = { turnPoint.x, turnPoint.y, animation.getWidth() / 4 ,animation.getHeight() / 4 };
+	SDL_Rect rect = { target.x, target.y, animation.getWidth() / 4 ,animation.getHeight() / 4 };
 	SDL_SetRenderDrawColor(renderer.getRenderer(), 0x0, 0x0, 0xFF, 0xFF);
 	SDL_RenderFillRect(renderer.getRenderer(), &rect);
 	SDL_Rect renderColRect = getCollisionRect();

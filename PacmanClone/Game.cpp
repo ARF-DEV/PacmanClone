@@ -58,6 +58,14 @@ void Game::update()
 			state = GameState::quit;
 		}
 		
+		if (e.type == SDL_KEYDOWN) {
+			if (e.key.keysym.sym == SDLK_q) {
+				gh1.setState(Ghost::GhostState::Chase);
+			}
+			if (e.key.keysym.sym == SDLK_e) {
+				gh1.setState(Ghost::GhostState::Scatter);
+			}
+		}
 	}
 	pacman.update();
 	gh1.update();

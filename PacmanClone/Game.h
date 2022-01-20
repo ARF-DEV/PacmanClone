@@ -52,6 +52,6 @@ private:
 	Animation ghostAnim{ ghostSpriteSheet, 0, 0, 16, 16, 32, 32, 8 };
 	Map map{ {32 , 32} };
 	Pacman pacman{ {64, 64}, anim, {8, 8, 16, 16}, map };
-	Ghost gh1{ {64, 256}, ghostAnim, {8, 8, 16, 16}, map, pacman };
+	Ghost gh1{ {64, 256}, ghostAnim, {8, 8, 16, 16}, map, pacman, {0, 0} };
 };
 
