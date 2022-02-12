@@ -4,7 +4,7 @@
 #include<iostream>
 class Window {
 public:
-	Window(std::string title = "", int x = SDL_WINDOWPOS_UNDEFINED, int y = SDL_WINDOWPOS_UNDEFINED, int w = 960, int h = 540, Uint32 flags = 0) {
+	Window(std::string title = "", int x = SDL_WINDOWPOS_UNDEFINED, int y = SDL_WINDOWPOS_UNDEFINED, int w = 1024, int h = 658, Uint32 flags = 0) {
 
 		pWindow = SDL_CreateWindow(title.c_str(), x, y, w, h, flags);
 		

@@ -3,6 +3,7 @@
 #include<string>
 #include<SDL.h>
 #include<SDL_image.h>
+#include<SDL_ttf.h>
 
 #include"Texture.h"
 #include"Animation.h"
@@ -37,16 +38,28 @@ private:
 	void draw();
 	bool init();
 	bool isColliding(SDL_Rect rect1, SDL_Rect rect2);
+	void setStateToGameplay() {
+		state = GameState::gameplay;
+	}
+	void resetGame();
+
 private:
 	int coinAmount = 0;
 
 	GameState state;
 	SDL_Event e;
 	Window window{"Testing"};
+	TTF_Font* gFont;
+	TTF_Font* minecraftFont;
 	Renderer renderer{window.getWindow(), SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC };
 	Texture texture{"assets/blueGhost.png", renderer.getRenderer() };
 	Texture coinSpriteSheet{ "assets/BigCoin.png", renderer.getRenderer() };
-	Texture ghostSpriteSheet{ "assets/orangeGhost.png", renderer.getRenderer() };
+	Texture ghostSpriteSheet{ "assets/orangeGhost.png", renderer.getRenderer()};
+	Texture startTextTexture;
+	Texture pressEnterToStartTexture;
+	Texture pressEnterToRestartTexture;
+	Texture gameOverTextTexture;
+	SDL_Color textColor = { 255, 255,255 };
 	Animation anim{texture, 0, 0, 16, 16, 32, 32, 8};
 	Animation coinAnim{coinSpriteSheet, 0, 0, 16, 16, 24, 24, 8};
 	Animation ghostAnim{ ghostSpriteSheet, 0, 0, 16, 16, 32, 32, 8 };

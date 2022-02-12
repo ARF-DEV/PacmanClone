@@ -16,7 +16,7 @@ void Ghost::update()
 			setTarget(pacman.getCenter());
 			break;
 		case Ghost::GhostState::Scatter:
-			setTarget(chaseTargetPos);
+			setTarget(scatterTargetPos);
 			break;
 		case Ghost::GhostState::Frightened:
 		{
@@ -25,13 +25,15 @@ void Ghost::update()
 				return (tile.getCenter() - getCenter()).normalize() == -dir;
 			}), neighbouringRoads.end());
 			
- 			std::uniform_int_distribution<int> dist{ 0, static_cast<int>(neighbouringRoads.size() - 1)};
-			int randInt = dist(rng);
-			setTarget(neighbouringRoads[randInt].getCenter());
+			if (neighbouringRoads.size() != 0) {
+ 				std::uniform_int_distribution<int> dist{ 0, static_cast<int>(neighbouringRoads.size() - 1)};
+				int randInt = dist(rng);
+				setTarget(neighbouringRoads[randInt].getCenter());
+			}
 			break;
 		}
 		case Ghost::GhostState::Eaten:
-			// Back to Base
+			// Back to Bases
 			break;
 		default:
 			break;

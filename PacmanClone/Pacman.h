@@ -15,10 +15,23 @@ public:
 	void update() override;
 	void lateUpdate() override;
 	void draw(Renderer& renderer) override;
+	bool isDead() {
+		return dead;
+	}
+	void deadIsTrue() {
+		dead = true;
+	}
+	void reset() {
+		dir = { 0, 0 };
+		dead = false;
+		turnPoint = { 0, 0 };
+		savedDir = { -1, -1 };
+	}
 private:
 	Vec2<int> dir;
 	Vec2<int> turnPoint;
 	Vec2<int> savedDir;
 	float turnThreshold = 1.5f;
 	Map& map;
+	bool dead = false;
 };

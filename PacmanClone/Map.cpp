@@ -131,6 +131,46 @@ void Map::loadMapFromVector(std::vector<int> mapVector, Animation& coinAnim, int
                 SDL_Rect colRect = { 8, 8, 8, 8 };
                 listOfCoin.emplace_back(curTile.getCenter(), coinAnim, colRect);
             }
+            else if (mapVector[y * mapWidth + x] == 5) {
+                Vec2<int> tilePos = { topLeft.x + x * tileSize, topLeft.y + y * tileSize };
+                Tile& curTile = getTile(tilePos);
+                curTile.setFlags(Tile::TileState::Road);
+                curTile.setPosition(tilePos);
+                curTile.setSize(tileSize, tileSize);
+                ghostSpawns[0] = curTile.getCenter();
+            }
+            else if (mapVector[y * mapWidth + x] == 6) {
+                Vec2<int> tilePos = { topLeft.x + x * tileSize, topLeft.y + y * tileSize };
+                Tile& curTile = getTile(tilePos);
+                curTile.setFlags(Tile::TileState::Road);
+                curTile.setPosition(tilePos);
+                curTile.setSize(tileSize, tileSize);
+                ghostSpawns[1] = curTile.getCenter();
+            }
+            else if (mapVector[y * mapWidth + x] == 7) {
+                Vec2<int> tilePos = { topLeft.x + x * tileSize, topLeft.y + y * tileSize };
+                Tile& curTile = getTile(tilePos);
+                curTile.setFlags(Tile::TileState::Road);
+                curTile.setPosition(tilePos);
+                curTile.setSize(tileSize, tileSize);
+                ghostSpawns[2] = curTile.getCenter();
+            }
+            else if (mapVector[y * mapWidth + x] == 8) {
+                Vec2<int> tilePos = { topLeft.x + x * tileSize, topLeft.y + y * tileSize };
+                Tile& curTile = getTile(tilePos);
+                curTile.setFlags(Tile::TileState::Road);
+                curTile.setPosition(tilePos);
+                curTile.setSize(tileSize, tileSize);
+                ghostSpawns[3] = curTile.getCenter();
+            }
+            else if (mapVector[y * mapWidth + x] == 9) {
+                Vec2<int> tilePos = { topLeft.x + x * tileSize, topLeft.y + y * tileSize };
+                Tile& curTile = getTile(tilePos);
+                curTile.setFlags(Tile::TileState::Road);
+                curTile.setPosition(tilePos);
+                curTile.setSize(tileSize, tileSize);
+                playerSpawn = curTile.getCenter();
+            }
             // ADD OOTHER STUFF (COIN, ETC) LATER
         }
     }

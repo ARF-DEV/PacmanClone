@@ -25,7 +25,7 @@ public:
 		Entity(_topLeft, anim, collisionRect),
 		map(_map),
 		pacman(pacman),
-		chaseTargetPos(chaseTargetPos)
+		scatterTargetPos(scatterTargetPos)
 	{}
 
 	void setTarget(Vec2<int> targetPos);
@@ -36,12 +36,17 @@ public:
 	void setState(GhostState _state) {
 		state = _state;
 	}
+	void reset() {
+		dir = { 0, 0 };
+		target = { 0, 0 };
+		turnPoint = { 0, 0 };
+	}
 
 private:
 	Vec2<int> dir = { 0, 0 };
 	Vec2<int> turnPoint;
 	Vec2<int> target;
-	Vec2<int> chaseTargetPos;
+	Vec2<int> scatterTargetPos;
 	GhostState state = GhostState::Chase;
 
 	Pacman& pacman;

@@ -27,6 +27,9 @@ public:
 	Tile& getTopTile(Vec2<int> pos);
 	Tile& getBottomTile(Vec2<int> pos);
 	Tile& getTileByIndex(int i, int j);
+	std::vector<Vec2<int>> getGhostSpawns() {
+		return ghostSpawns;
+	}
 	bool wallInfront(Vec2<int> pos, Vec2<int> dir);
 	void loadMapFromImage(std::string path);
 	void loadMapFromVector(std::vector<int> mapVector, Animation& coinAnim, int _mapWidth, int _mapHeight);
@@ -35,12 +38,17 @@ public:
 	Vec2<int> getTopLeft() {
 		return topLeft;
 	}
+	Vec2<int> getPlayerSpawn() {
+		return playerSpawn;
+	}
 	std::vector<Coin>& getListOfVector() {
 		return listOfCoin;
 	}
 	std::vector<Tile> getNeibouringRoads(Vec2<int> pos);
 private:
 	Vec2<int> topLeft;
+	Vec2<int> playerSpawn;
+	std::vector<Vec2<int>> ghostSpawns{4};
 	std::vector<Coin> listOfCoin;
 	int mapWidth, mapHeight;
 	int tileSize;

@@ -22,6 +22,11 @@ Texture::Texture(std::string path, SDL_Renderer* pRenderer)
 	loadTextureNonChroma(path, pRenderer);
 }
 
+Texture::Texture(SDL_Renderer* renderer, TTF_Font* font, std::string text, SDL_Color textColor)
+{
+	createTextureFromText(renderer, font, text, textColor);
+}
+
 Texture::~Texture()
 {
 	free();
@@ -67,6 +72,39 @@ bool Texture::loadTexture(std::string path, SDL_Renderer* renderer, Uint8 r, Uin
 	}
 
 	SDL_SetColorKey(nSurf, SDL_TRUE, SDL_MapRGB(nSurf->format, r, g, b));
+
+	pTexture = SDL_CreateTextureFromSurface(renderer, nSurf);
+
+	if (pTexture == nullptr) {
+		std::cout << "Cannot create Texture : " << SDL_GetError() << '\n';
+		return false;
+	}
+
+	vWidth = nSurf->w;
+	vHeight = nSurf->h;
+
+	SDL_FreeSurface(nSurf);
+
+	return true;
+}
+
+bool Texture::createTextureFromText(SDL_Renderer* renderer, TTF_Font* font,std::string text, SDL_Color textColor)
+{
+	free();
+	
+	if (font == nullptr) {
+		std::cout << "pointer to Font is null : " << TTF_GetError() << std::endl;
+		return false;
+	}
+
+	SDL_Surface* nSurf = TTF_RenderText_Solid(font, text.c_str(), textColor);
+
+	if (nSurf == nullptr) {
+		std::cout << "Cannot load Surface (Text) : " << IMG_GetError() << '\n';
+		return false;
+	}
+
+	
 
 	pTexture = SDL_CreateTextureFromSurface(renderer, nSurf);
 
