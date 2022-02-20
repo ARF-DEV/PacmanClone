@@ -13,8 +13,13 @@ void Ghost::update()
 		switch (state)
 		{
 		case Ghost::GhostState::Chase:
-			setTarget(pacman.getCenter());
+		{
+			Vec2<int> a = processTargetPosFunc(pacman);
+			std::cout << pacman.getCenter().x << ' ' << pacman.getCenter().y << '\n';
+			std::cout << a.x << ' ' << a.y << '\n';
+			setTarget(a);
 			break;
+		}
 		case Ghost::GhostState::Scatter:
 			setTarget(scatterTargetPos);
 			break;
@@ -39,11 +44,29 @@ void Ghost::update()
 			break;
 		}
 		
-
+		
 		nextTargetTile = findNearestTile();
 		turnPoint = nextTargetTile.getCenter();
 	}
 	
+	if (state != GhostState::Frightened) {
+		if (currentAnimation != AnimState::UP && dir == Vec2<int>{0, -1}) {
+			currentAnimation = AnimState::UP;
+		}
+		else if (currentAnimation != AnimState::DOWN && dir == Vec2<int>{0, 1}) {
+			currentAnimation = AnimState::DOWN;
+		}
+		else if (currentAnimation != AnimState::LEFT && dir == Vec2<int>{-1, 0}) {
+			currentAnimation = AnimState::LEFT;
+		}
+		else if (currentAnimation != AnimState::RIGHT && dir == Vec2<int>{1, 0}) {
+			currentAnimation = AnimState::RIGHT;
+		}
+	}
+	else {
+		currentAnimation = AnimState::FRIGHTENED;
+	}
+
 	moveToPos(turnPoint);
 }
 
@@ -51,7 +74,7 @@ void Ghost::draw(Renderer& renderer)
 {
 	Entity::draw(renderer);
 
-	SDL_Rect rect = { target.x, target.y, animation.getWidth() / 4 ,animation.getHeight() / 4 };
+	SDL_Rect rect = { target.x, target.y, animations[(int)currentAnimation]->getWidth() / 4 ,animations[(int)currentAnimation]->getHeight() / 4 };
 	SDL_SetRenderDrawColor(renderer.getRenderer(), 0x0, 0x0, 0xFF, 0xFF);
 	SDL_RenderFillRect(renderer.getRenderer(), &rect);
 	SDL_Rect renderColRect = getCollisionRect();
@@ -74,8 +97,6 @@ Tile Ghost::findNearestTile()
 
 		if (i->first == -dir || i->second.checkFlags(Tile::TileState::Wall))
 			continue;
-		std::cout << dir.x << " " << dir.y << " ";
-		std::cout << i->first.x << " " << i->first.y << std::endl;
 		int distance = (target - i->second.getCenter()).getLength();
 		if (distance < minDistance) {
 			minDistance = distance;

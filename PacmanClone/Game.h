@@ -26,7 +26,30 @@ private:
 	};
 public:
 	void run();
-	Game();
+	Game()
+		:
+		window("testing"),
+		pacmanSprite("assets/pacmanSprite.png", renderer.getRenderer()),
+		coinSpriteSheet("assets/BigCoin.png", renderer.getRenderer()),
+		textColor(SDL_Color(255,255,255)),
+		renderer(window.getWindow(), SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC),
+		state(GameState::menu),
+		map({32, 32}),
+		pacman(Vec2<int>(64, 64), std::move(Animation(pacmanSprite, 0, 32, 16, 16, 32, 32, 3 )), SDL_Rect(8, 8, 16, 16), map),
+		gh1({ 64, 256 }, std::move(Animation( pacmanSprite, 0, 80, 16, 16, 32, 32, 2 )), { 8, 8, 16, 16 }, map, pacman, { 0, 0 }, [](Pacman& pacman) -> Vec2<int> {
+			return pacman.getCenter() + (pacman.getDir() * 32 * 1);
+		})
+
+	{
+		pacman.addAnimation(Entity::AnimState::DOWN, std::make_unique<Animation>(std::move(Animation(pacmanSprite, 0, 48, 16, 16, 32, 32, 3))));
+		pacman.addAnimation(Entity::AnimState::LEFT, std::make_unique<Animation>(std::move(Animation(pacmanSprite, 0, 0, 16, 16, 32, 32, 3))));
+		pacman.addAnimation(Entity::AnimState::RIGHT, std::make_unique<Animation>(std::move(Animation(pacmanSprite, 0, 16, 16, 16, 32, 32, 3))));
+		gh1.addAnimation(Entity::AnimState::DOWN, std::make_unique<Animation>(std::move(Animation(pacmanSprite, 32, 80, 16, 16, 32, 32, 2))));
+		gh1.addAnimation(Entity::AnimState::LEFT, std::make_unique<Animation>(std::move(Animation(pacmanSprite, 64, 80, 16, 16, 32, 32, 2))));
+		gh1.addAnimation(Entity::AnimState::RIGHT, std::make_unique<Animation>(std::move(Animation(pacmanSprite, 96, 80, 16, 16, 32, 32, 2))));
+		gh1.addAnimation(Entity::AnimState::FRIGHTENED, std::make_unique<Animation>(std::move(Animation(pacmanSprite, 0, 144, 16, 16, 32, 32, 2))));
+		init();
+	}
 	Game(const Game& other) = delete;
 	Game& operator=(const Game& other) = delete;
 	~Game();
@@ -48,23 +71,19 @@ private:
 
 	GameState state;
 	SDL_Event e;
-	Window window{"Testing"};
+	Window window;
 	TTF_Font* gFont;
 	TTF_Font* minecraftFont;
-	Renderer renderer{window.getWindow(), SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC };
-	Texture texture{"assets/blueGhost.png", renderer.getRenderer() };
-	Texture coinSpriteSheet{ "assets/BigCoin.png", renderer.getRenderer() };
-	Texture ghostSpriteSheet{ "assets/orangeGhost.png", renderer.getRenderer()};
+	Renderer renderer;
+	Texture pacmanSprite;
+	Texture coinSpriteSheet;
 	Texture startTextTexture;
 	Texture pressEnterToStartTexture;
 	Texture pressEnterToRestartTexture;
 	Texture gameOverTextTexture;
-	SDL_Color textColor = { 255, 255,255 };
-	Animation anim{texture, 0, 0, 16, 16, 32, 32, 8};
-	Animation coinAnim{coinSpriteSheet, 0, 0, 16, 16, 24, 24, 8};
-	Animation ghostAnim{ ghostSpriteSheet, 0, 0, 16, 16, 32, 32, 8 };
-	Map map{ {32 , 32} };
-	Pacman pacman{ {64, 64}, anim, {8, 8, 16, 16}, map };
-	Ghost gh1{ {64, 256}, ghostAnim, {8, 8, 16, 16}, map, pacman, {0, 0} };
+	SDL_Color textColor;
+	Map map;
+	Pacman pacman;
+	Ghost gh1;
 };
 

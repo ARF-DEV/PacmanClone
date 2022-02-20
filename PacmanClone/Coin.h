@@ -6,9 +6,9 @@
 
 class Coin : public Entity {
 public:
-	Coin(Vec2<int> centerPos, Animation& anim, SDL_Rect collisionRect)
+	Coin(Vec2<int> centerPos, Animation&& anim, SDL_Rect collisionRect)
 		:
-		Entity({0, 0}, anim, collisionRect)
+		Entity({0, 0}, std::move(anim), collisionRect)
 	{
 		setCenterPos(centerPos);
 	}

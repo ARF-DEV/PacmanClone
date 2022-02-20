@@ -8,6 +8,8 @@
 class Animation {
 public:
 	Animation(Texture& pTexture, int x, int y, int srcWidth, int srcHeight, int renderWidth, int renderHeight, int nFrames);
+	Animation& operator=(const Animation& other) = default;
+	Animation(const Animation& other) = default;
 	void draw(int xPos, int yPos, SDL_Renderer* pRenderer);
 	void setLoop(bool loop);
 	void next();

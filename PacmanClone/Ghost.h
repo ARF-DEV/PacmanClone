@@ -9,6 +9,7 @@
 #include "Vec2.h"
 #include "Animation.h"
 #include "Pacman.h"
+#include <functional>
 
 class Ghost : public Entity {
 public:
@@ -19,14 +20,16 @@ public:
 		Frightened,
 		Eaten
 	};
-
-	Ghost(Vec2<int> _topLeft, Animation& anim, SDL_Rect collisionRect, Map& _map, Pacman& pacman, Vec2<int> chaseTargetPos)
+	Ghost(Vec2<int> _topLeft, Animation&& anim, SDL_Rect collisionRect, Map& _map, Pacman& pacman, Vec2<int> chaseTargetPos, std::function<Vec2<int>(Pacman& pacman)> processTargetPosFunc)
 		:
-		Entity(_topLeft, anim, collisionRect),
+		Entity(_topLeft, std::move(anim), collisionRect),
 		map(_map),
 		pacman(pacman),
-		scatterTargetPos(scatterTargetPos)
-	{}
+		scatterTargetPos(scatterTargetPos),
+		processTargetPosFunc(processTargetPosFunc)
+	{
+		std::cout << sizeof(animations) / sizeof(std::unique_ptr<Animation>) << std::endl;
+	}
 
 	void setTarget(Vec2<int> targetPos);
 	void update() override;
@@ -54,5 +57,6 @@ private:
 	float turnThreshold = 0.5f;
 	std::random_device rd;
 	std::mt19937 rng{rd()};
+	std::function<Vec2<int>(Pacman& pacman)> processTargetPosFunc = nullptr;
 	
 };

@@ -50,8 +50,8 @@ void Game::start()
 		{
 			1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 			1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,
-			1,0,1,1,0,1,1,1,0,1,0,1,1,1,0,1,1,0,1,
-			1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+			1,2,1,1,0,1,1,1,0,1,0,1,1,1,0,1,1,0,1,
+			1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 			1,0,1,1,0,1,0,1,1,1,1,1,0,1,0,1,1,1,1,
 			1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,
 			1,1,1,1,0,1,1,1,0,1,0,1,1,1,0,1,1,1,1,
@@ -67,7 +67,7 @@ void Game::start()
 			1,0,1,1,0,1,1,1,0,1,0,1,1,1,0,1,1,0,1,
 			1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,
 			1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
-		}, coinAnim, 19, 19);
+		}, Animation(coinSpriteSheet, 0, 0, 16, 16, 24, 24, 8), 19, 19);
 	gFont = TTF_OpenFont("assets/pacmanFont.TTF", 50);
 	minecraftFont = TTF_OpenFont("assets/Minecraft.ttf", 24);
 	startTextTexture.createTextureFromText(renderer.getRenderer(), gFont, "PACMAN", { 255, 255, 255 });
@@ -88,16 +88,6 @@ void Game::update()
 		}
 		
 		if (e.type == SDL_KEYDOWN) {
-			if (e.key.keysym.sym == SDLK_q) {
-				gh1.setState(Ghost::GhostState::Chase);
-			}
-			if (e.key.keysym.sym == SDLK_e) {
-				gh1.setState(Ghost::GhostState::Scatter);
-			}
-			if (e.key.keysym.sym == SDLK_w) {
-				gh1.setState(Ghost::GhostState::Frightened);
-			}
-
 			if (e.key.keysym.sym == SDLK_RETURN) {
 				switch (state)
 				{
@@ -217,14 +207,7 @@ void Game::run() {
 	}
 }
 
-Game::Game()
-	:
-	state(GameState::menu)
-{
-	std::cout << "game" << std::endl;
-	init();
-	
-}
+
 
 Game::~Game()
 {

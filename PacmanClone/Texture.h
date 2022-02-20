@@ -10,12 +10,15 @@ private:
 public:
 	Texture();
 	Texture(std::string path, SDL_Renderer* pRenderer);
-	Texture(const Texture& other) = delete;
+	Texture(const Texture& other) = default;
 	Texture(Texture&& other) noexcept {
-		vWidth = other.vWidth;
-		vHeight = other.vHeight;
-		pTexture = other.pTexture;
-		other.pTexture = nullptr;
+
+		if (this != &other) {
+			vWidth = other.vWidth;
+			vHeight = other.vHeight;
+			pTexture = other.pTexture;
+			other.pTexture = nullptr;
+		}
 	};
 	Texture(SDL_Renderer* renderer, TTF_Font* font, std::string text, SDL_Color textColor);
 	Texture& operator=(const Texture& other) = delete;

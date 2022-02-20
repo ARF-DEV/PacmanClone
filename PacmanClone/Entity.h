@@ -1,6 +1,7 @@
 #pragma once
 #include<SDL.h>
 #include<vector>
+#include<memory>
 
 #include"Texture.h"
 #include"Animation.h"
@@ -9,13 +10,24 @@
 #include"Renderer.h"
 class Entity {
 public:
+	enum class AnimState {
+		UP = 0,
+		DOWN,
+		LEFT,
+		RIGHT,
+		PACMAN_COUNT,
+		FRIGHTENED,
+		GHOST_COUNT
+	};
+public:
 	Entity() = default;
-	Entity(Vec2<int> _topLeft, Animation& _animation, SDL_Rect _collisionRect = {0, 0, 0, 0})
+	Entity(Vec2<int> _topLeft, Animation&& _animation, SDL_Rect _collisionRect = {0, 0, 0, 0})
 		:
 		topLeft(_topLeft),
-		animation(_animation),
 		collisionRect(_collisionRect)
-	{}
+	{
+		addAnimation(AnimState::UP, std::make_unique<Animation>(std::move(_animation)));
+	}
 	virtual void start();
 	virtual void update();
 	virtual void lateUpdate();
@@ -25,10 +37,18 @@ public:
 	SDL_Rect getCollisionRect();
 	Vec2<int> getCenter();
 	void setCenterPos(Vec2<int> centerPos) {
-		topLeft = {centerPos.x - animation.getWidth() / 2, centerPos.y - animation.getHeight() / 2};
+		topLeft = {centerPos.x - animations[(int)currentAnimation]->getWidth() / 2, centerPos.y - animations[(int)currentAnimation]->getHeight() / 2};
+	}
+	void addAnimation(AnimState key, std::unique_ptr<Animation> animation) {
+		animations[(int)key] = std::move(animation);
+	}
+
+	void setCurrentAnimation(AnimState key) {
+		currentAnimation = key;
 	}
 protected:	
 	Vec2<int> topLeft;
-	Animation& animation;
+	std::unique_ptr<Animation> animations[(int)AnimState::GHOST_COUNT];
+	AnimState currentAnimation = AnimState::UP;
 	SDL_Rect collisionRect;
 };

@@ -9,12 +9,15 @@ void Entity::lateUpdate()
 
 void Entity::draw(Renderer& renderer)
 {
-	animation.draw(topLeft.x, topLeft.y, renderer.getRenderer());
+	if (animations[(int)currentAnimation] != nullptr)
+	{
+		animations[(int)currentAnimation]->draw(topLeft.x, topLeft.y, renderer.getRenderer());
+	}
 }
 
 SDL_Rect Entity::getRect()
 {
-	return { topLeft.x, topLeft.y, animation.getWidth(), animation.getHeight() };
+	return { topLeft.x, topLeft.y, animations[(int)currentAnimation]->getWidth(), animations[(int)currentAnimation]->getHeight() };
 }
 
 SDL_Rect Entity::getCollisionRect()

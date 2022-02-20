@@ -12,7 +12,7 @@ Animation::Animation(Texture& pTexture, int x, int y, int _srcWidth, int _srcHei
 	std::cout << "animation" << std::endl;
 	for (int i = 0; i < nFrames; i++) {
 		int xBox = i * srcWidth;
-		SDL_Rect spriteBox = { xBox, y, srcWidth, srcHeight };
+		SDL_Rect spriteBox = { x + xBox, y, srcWidth, srcHeight };
 		spriteBoxes.push_back(spriteBox);
 	}
 }

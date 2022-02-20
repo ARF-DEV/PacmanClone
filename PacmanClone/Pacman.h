@@ -4,9 +4,9 @@
 #include "Map.h"
 class Pacman : public Entity {
 public:
-	Pacman(Vec2<int> _topLeft, Animation& anim, SDL_Rect collisionRect, Map& _map)
+	Pacman(Vec2<int> _topLeft, Animation&& anim, SDL_Rect collisionRect, Map& _map)
 		:
-		Entity(_topLeft, anim, collisionRect),
+		Entity(_topLeft, std::move(anim), collisionRect),
 		dir({0,0}),
 		savedDir({0,0}),
 		turnPoint({-1, -1}),
@@ -26,6 +26,10 @@ public:
 		dead = false;
 		turnPoint = { 0, 0 };
 		savedDir = { -1, -1 };
+	}
+
+	Vec2<int> getDir() {
+		return dir;
 	}
 private:
 	Vec2<int> dir;

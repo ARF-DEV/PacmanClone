@@ -32,7 +32,7 @@ public:
 	}
 	bool wallInfront(Vec2<int> pos, Vec2<int> dir);
 	void loadMapFromImage(std::string path);
-	void loadMapFromVector(std::vector<int> mapVector, Animation& coinAnim, int _mapWidth, int _mapHeight);
+	void loadMapFromVector(std::vector<int> mapVector, Animation&& coinAnim, int _mapWidth, int _mapHeight);
 	void draw(Renderer& renderer);
 	int getTileSize();
 	Vec2<int> getTopLeft() {

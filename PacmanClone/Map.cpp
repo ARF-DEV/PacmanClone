@@ -96,7 +96,7 @@ void Map::loadMapFromImage(std::string path)
     }
 }
 
-void Map::loadMapFromVector(std::vector<int> mapVector, Animation& coinAnim, int _mapWidth, int _mapHeight)
+void Map::loadMapFromVector(std::vector<int> mapVector, Animation&& coinAnim, int _mapWidth, int _mapHeight)
 {
     if (tiles != nullptr) {
         delete[] tiles;
@@ -129,7 +129,7 @@ void Map::loadMapFromVector(std::vector<int> mapVector, Animation& coinAnim, int
                 curTile.setPosition(tilePos);
                 curTile.setSize(tileSize, tileSize);
                 SDL_Rect colRect = { 8, 8, 8, 8 };
-                listOfCoin.emplace_back(curTile.getCenter(), coinAnim, colRect);
+                listOfCoin.emplace_back(curTile.getCenter(), std::move(coinAnim), colRect);
             }
             else if (mapVector[y * mapWidth + x] == 5) {
                 Vec2<int> tilePos = { topLeft.x + x * tileSize, topLeft.y + y * tileSize };
