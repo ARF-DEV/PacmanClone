@@ -115,6 +115,9 @@ void Game::update()
 	case Game::GameState::gameplay:
 		pacman.update();
 		gh1.update();
+
+		// IMPLEMENT TIMER FOR FRIGHTENED IN GHOST
+
 		break;
 	case Game::GameState::gameover:
 		break;
@@ -139,7 +142,8 @@ void Game::lateUpdate()
 		for (Coin& coin : listOfCoin) {
 			if (!coin.isEaten() && isColliding(pacman.getCollisionRect(), coin.getCollisionRect())) {
 				if (coin.isBigCoin()) {
-					pacman.enableSuperPower();
+					gh1.flip();
+					gh1.setState(Ghost::GhostState::Frightened);
 				}
 				coin.setEaten(true);
 				++coinAmount;
@@ -147,14 +151,15 @@ void Game::lateUpdate()
 			}
 		}
 		if (isColliding(gh1.getCollisionRect(), pacman.getCollisionRect())) {
-			if (!pacman.isSuper())
+			if (gh1.isFrightened())
 			{
-				pacman.deadIsTrue();
-				state = GameState::gameover;
-			}
-			else if (!gh1.isEaten()) {
 				gh1.setState(Ghost::GhostState::Eaten);
 				gh1.flip();
+			}
+			else if (!gh1.isEaten()) {
+				pacman.deadIsTrue();
+				state = GameState::gameover;
+				
 			}
 			
 		}

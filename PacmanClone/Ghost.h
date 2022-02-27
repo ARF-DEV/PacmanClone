@@ -59,6 +59,9 @@ public:
 	bool targetReached() {
 		return abs((target - getCenter()).getLength()) < 0.2f;
 	}
+	bool isFrightened() {
+		return state == GhostState::Frightened;
+	}
 private:
 	GhostState state = GhostState::Chase;
 	Pacman& pacman;

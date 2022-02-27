@@ -17,6 +17,7 @@ public:
 	}
 	void resetTimePass() {
 		timePass = 0;
+		updateTicks();
 	}
 private:
 	float delayTime;

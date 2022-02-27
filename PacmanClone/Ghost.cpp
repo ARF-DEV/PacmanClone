@@ -6,26 +6,14 @@ void Ghost::setTarget(Vec2<int> targetPos)
 }
 void Ghost::update()
 {
-
+	std::cout << (int)state << '\n';
 	switch (state)
 	{
 	case Ghost::GhostState::Chase:
-		if (pacman.isSuper()){
-			flip();
-			state = GhostState::Frightened;
-		}
 		break;
 	case Ghost::GhostState::Scatter:
-		if (pacman.isSuper()){
-			flip();
-			state = GhostState::Frightened;
-		}
 		break;
 	case Ghost::GhostState::Frightened:
-		if (!pacman.isSuper()) {
-			flip();
-			state = GhostState::Chase;
-		}
 		break;
 	case Ghost::GhostState::Eaten:
 		if (targetReached()) {
@@ -37,9 +25,9 @@ void Ghost::update()
 	}
 
 	Tile nextTargetTile;
-	auto a = getCenter();
-	auto tst = (turnPoint - a).getLength();
-	if (tst <= turnThreshold || turnPoint == Vec2<int>{0, 0}) {
+	auto center = getCenter();
+	auto distance = (turnPoint - center).getLength();
+	if (distance <= turnThreshold || turnPoint == Vec2<int>{0, 0}) {
 		
 		switch (state)
 		{

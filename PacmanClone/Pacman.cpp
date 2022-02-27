@@ -4,17 +4,6 @@
 
 void Pacman::update()
 {
-	std::cout << superPower << '\n';
-	if (superPower) {
-		superPowerTimer.updateTicks();
-		if (!superPowerTimer.passing()) {
-			superPowerTimer.updateTimePass();
-		}
-		else {
-			superPower = false;
-		}
-	}
-
 	/*
 		direction of pacman will change if the inputed direction is the opposite of current direction
 		if not then the inputed direction will be saved
