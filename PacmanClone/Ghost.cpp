@@ -7,16 +7,45 @@ void Ghost::setTarget(Vec2<int> targetPos)
 void Ghost::update()
 {
 
+	switch (state)
+	{
+	case Ghost::GhostState::Chase:
+		if (pacman.isSuper()){
+			flip();
+			state = GhostState::Frightened;
+		}
+		break;
+	case Ghost::GhostState::Scatter:
+		if (pacman.isSuper()){
+			flip();
+			state = GhostState::Frightened;
+		}
+		break;
+	case Ghost::GhostState::Frightened:
+		if (!pacman.isSuper()) {
+			flip();
+			state = GhostState::Chase;
+		}
+		break;
+	case Ghost::GhostState::Eaten:
+		if (targetReached()) {
+			state = GhostState::Chase;
+		}
+		break;
+	default:
+		break;
+	}
+
 	Tile nextTargetTile;
-	if ((turnPoint - getCenter()).getLength() <= turnThreshold || turnPoint == Vec2<int>{0, 0}) {
+	auto a = getCenter();
+	auto tst = (turnPoint - a).getLength();
+	if (tst <= turnThreshold || turnPoint == Vec2<int>{0, 0}) {
 		
 		switch (state)
 		{
 		case Ghost::GhostState::Chase:
 		{
 			Vec2<int> a = processTargetPosFunc(pacman);
-			std::cout << pacman.getCenter().x << ' ' << pacman.getCenter().y << '\n';
-			std::cout << a.x << ' ' << a.y << '\n';
 			setTarget(a);
 			break;
 		}
@@ -38,7 +67,7 @@ void Ghost::update()
 			break;
 		}
 		case Ghost::GhostState::Eaten:
-			// Back to Bases
+			setTarget(homePos);
 			break;
 		default:
 			break;
@@ -81,6 +110,9 @@ void Ghost::draw(Renderer& renderer)
 	SDL_SetRenderDrawColor(renderer.getRenderer(), 0x0, 0x0, 0xFF, 0xFF);
 	SDL_RenderDrawRect(renderer.getRenderer(), &renderColRect);
 
+	SDL_Rect p = { turnPoint.x, turnPoint.y, animations[(int)currentAnimation]->getWidth() / 4 ,animations[(int)currentAnimation]->getHeight() / 4 };
+	SDL_SetRenderDrawColor(renderer.getRenderer(), 0xFF, 0xFF, 0xFF, 0xFF);
+	SDL_RenderFillRect(renderer.getRenderer(), &p);
 }
 
 Tile Ghost::findNearestTile()

@@ -39,6 +39,7 @@ void Game::resetGame()
 {
 	gh1.reset();
 	gh1.setCenterPos(map.getGhostSpawns()[0]);
+	gh1.setHomePos(map.getGhostSpawns()[0]);
 	pacman.reset();
 	pacman.setCenterPos(map.getPlayerSpawn());
 }
@@ -52,22 +53,22 @@ void Game::start()
 			1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,
 			1,2,1,1,0,1,1,1,0,1,0,1,1,1,0,1,1,0,1,
 			1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-			1,0,1,1,0,1,0,1,1,1,1,1,0,1,0,1,1,1,1,
-			1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,
+			1,10,1,1,0,1,0,1,1,1,1,1,0,1,0,1,1,1,1,
+			1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,10,0,0,1,
 			1,1,1,1,0,1,1,1,0,1,0,1,1,1,0,1,1,1,1,
-			1,0,0,1,0,1,0,5,0,0,0,0,0,1,0,1,0,0,1,
+			1,0,0,1,0,1,0,5,0,0,0,0,0,1,0,1,10,0,1,
 			1,1,1,1,0,1,0,1,1,0,1,1,0,1,0,1,1,1,1,
 			1,0,0,0,0,0,0,1,6,7,8,1,0,0,0,0,0,0,1,
 			1,1,1,1,0,1,0,1,1,1,1,1,0,1,0,1,1,1,1,
 			1,0,0,1,0,1,0,0,0,9,0,0,0,1,0,1,0,0,1,
-			1,1,1,1,0,1,1,1,0,1,0,1,1,1,0,1,1,1,1,
-			1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,
+			1,1,1,1,0,1,1,1,0,1,10,1,1,1,0,1,1,1,1,
+			1,0,0,0,0,1,0,0,0,1,0,0,0,1,10,0,0,0,1,
 			1,0,1,1,0,1,0,1,1,1,1,1,0,1,0,1,1,0,1,
 			1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 			1,0,1,1,0,1,1,1,0,1,0,1,1,1,0,1,1,0,1,
 			1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,
 			1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
-		}, Animation(coinSpriteSheet, 0, 0, 16, 16, 24, 24, 8), 19, 19);
+		}, Animation(coinSpriteSheet, 0, 0, 16, 16, 24, 24, 8), Animation(bigCoinSpriteSheet, 0, 0, 16, 16, 24, 24, 8), 19, 19);
 	gFont = TTF_OpenFont("assets/pacmanFont.TTF", 50);
 	minecraftFont = TTF_OpenFont("assets/Minecraft.ttf", 24);
 	startTextTexture.createTextureFromText(renderer.getRenderer(), gFont, "PACMAN", { 255, 255, 255 });
@@ -105,9 +106,6 @@ void Game::update()
 				}
 			}
 		}
-
-		
-		
 	}
 
 	switch (state)
@@ -140,14 +138,25 @@ void Game::lateUpdate()
 		auto& listOfCoin = map.getListOfVector();
 		for (Coin& coin : listOfCoin) {
 			if (!coin.isEaten() && isColliding(pacman.getCollisionRect(), coin.getCollisionRect())) {
+				if (coin.isBigCoin()) {
+					pacman.enableSuperPower();
+				}
 				coin.setEaten(true);
 				++coinAmount;
 				std::cout << coinAmount << '\n';
 			}
 		}
 		if (isColliding(gh1.getCollisionRect(), pacman.getCollisionRect())) {
-			pacman.deadIsTrue();
-			state = GameState::gameover;
+			if (!pacman.isSuper())
+			{
+				pacman.deadIsTrue();
+				state = GameState::gameover;
+			}
+			else if (!gh1.isEaten()) {
+				gh1.setState(Ghost::GhostState::Eaten);
+				gh1.flip();
+			}
+			
 		}
 		break;
 

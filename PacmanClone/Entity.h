@@ -17,7 +17,9 @@ public:
 		RIGHT,
 		PACMAN_COUNT,
 		FRIGHTENED,
-		GHOST_COUNT
+		GHOST_COUNT,
+		BIG_COIN,
+		G_COUNT,
 	};
 public:
 	Entity() = default;
@@ -48,7 +50,7 @@ public:
 	}
 protected:	
 	Vec2<int> topLeft;
-	std::unique_ptr<Animation> animations[(int)AnimState::GHOST_COUNT];
+	std::unique_ptr<Animation> animations[(int)AnimState::G_COUNT];
 	AnimState currentAnimation = AnimState::UP;
 	SDL_Rect collisionRect;
 };

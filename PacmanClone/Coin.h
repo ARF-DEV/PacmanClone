@@ -6,11 +6,16 @@
 
 class Coin : public Entity {
 public:
-	Coin(Vec2<int> centerPos, Animation&& anim, SDL_Rect collisionRect)
+	Coin(Vec2<int> centerPos, Animation&& coinAnim, Animation&& bigCoinAnim, SDL_Rect collisionRect, bool isBigCoin = false)
 		:
-		Entity({0, 0}, std::move(anim), collisionRect)
+		Entity({ 0, 0 }, std::move(coinAnim), collisionRect),
+		bigCoin(isBigCoin)
 	{
 		setCenterPos(centerPos);
+		addAnimation(AnimState::BIG_COIN, std::make_unique<Animation>(std::move(bigCoinAnim)));
+		if (bigCoin) {
+			currentAnimation = AnimState::BIG_COIN;
+		}
 	}
 
 	void draw(Renderer& renderer) override;
@@ -20,6 +25,10 @@ public:
 	void setEaten(bool bVal) {
 		eaten = bVal;
 	}
+	bool isBigCoin() {
+		return bigCoin;
+	}
 private:
 	bool eaten = false;
+	bool bigCoin = false;
 };

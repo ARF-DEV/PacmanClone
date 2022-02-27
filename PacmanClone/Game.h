@@ -30,7 +30,8 @@ public:
 		:
 		window("testing"),
 		pacmanSprite("assets/pacmanSprite.png", renderer.getRenderer()),
-		coinSpriteSheet("assets/BigCoin.png", renderer.getRenderer()),
+		coinSpriteSheet("assets/coin.png", renderer.getRenderer()),
+		bigCoinSpriteSheet("assets/bigCoin.png", renderer.getRenderer()),
 		textColor(SDL_Color(255,255,255)),
 		renderer(window.getWindow(), SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC),
 		state(GameState::menu),
@@ -77,6 +78,7 @@ private:
 	Renderer renderer;
 	Texture pacmanSprite;
 	Texture coinSpriteSheet;
+	Texture bigCoinSpriteSheet;
 	Texture startTextTexture;
 	Texture pressEnterToStartTexture;
 	Texture pressEnterToRestartTexture;

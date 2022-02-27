@@ -26,7 +26,8 @@ public:
 		map(_map),
 		pacman(pacman),
 		scatterTargetPos(scatterTargetPos),
-		processTargetPosFunc(processTargetPosFunc)
+		processTargetPosFunc(processTargetPosFunc),
+		homePos(_topLeft)
 	{
 		std::cout << sizeof(animations) / sizeof(std::unique_ptr<Animation>) << std::endl;
 	}
@@ -45,18 +46,31 @@ public:
 		turnPoint = { 0, 0 };
 	}
 
+	void setHomePos(Vec2<int> _homePos) {
+		homePos = _homePos;
+	}
+	void flip() {
+		turnPoint = map.getTile(getCenter()).getCenter();
+		dir = -dir;
+	}
+	bool isEaten() {
+		return state == GhostState::Eaten;
+	}
+	bool targetReached() {
+		return abs((target - getCenter()).getLength()) < 0.2f;
+	}
 private:
-	Vec2<int> dir = { 0, 0 };
-	Vec2<int> turnPoint;
-	Vec2<int> target;
-	Vec2<int> scatterTargetPos;
 	GhostState state = GhostState::Chase;
-
 	Pacman& pacman;
 	Map& map;
 	float turnThreshold = 0.5f;
 	std::random_device rd;
 	std::mt19937 rng{rd()};
 	std::function<Vec2<int>(Pacman& pacman)> processTargetPosFunc = nullptr;
+	Vec2<int> dir = { 0, 0 };
+	Vec2<int> turnPoint;
+	Vec2<int> target;
+	Vec2<int> scatterTargetPos;
+	Vec2<int> homePos;
 	
 };
