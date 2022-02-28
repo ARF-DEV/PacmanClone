@@ -6,14 +6,27 @@ void Ghost::setTarget(Vec2<int> targetPos)
 }
 void Ghost::update()
 {
-	std::cout << (int)state << '\n';
+
+	frightenedTimer.updateTicks();
+	frightenedTimer.updateTimePass();
+	scatterTimer.updateTicks();
+	scatterTimer.updateTimePass();
+
 	switch (state)
 	{
 	case Ghost::GhostState::Chase:
 		break;
 	case Ghost::GhostState::Scatter:
+		if (scatterTimer.passing()) {
+			flip();
+			state = Ghost::GhostState::Chase;
+		}
 		break;
 	case Ghost::GhostState::Frightened:
+		if (frightenedTimer.passing()) {
+			flip();
+			state = Ghost::GhostState::Chase;
+		}
 		break;
 	case Ghost::GhostState::Eaten:
 		if (targetReached()) {
@@ -102,15 +115,19 @@ void Ghost::draw(Renderer& renderer)
 	SDL_SetRenderDrawColor(renderer.getRenderer(), 0xFF, 0xFF, 0xFF, 0xFF);
 	SDL_RenderFillRect(renderer.getRenderer(), &p);
 }
-
-Tile Ghost::findNearestTile()
-{
+std::unordered_map<Vec2<int>, Tile&, Vec2<int>::Vei2Hasher> Ghost::getNeighbouringTiles() {
 	std::unordered_map<Vec2<int>, Tile&, Vec2<int>::Vei2Hasher> neighbouringTiles{
 		{{0, -1}, map.getTopTile(getCenter())},
 		{{1, 0}, map.getRightTile(getCenter())},
 		{{0, 1},map.getBottomTile(getCenter())},
 		{{-1, 0}, map.getLeftTile(getCenter())}
 	};
+
+	return neighbouringTiles;
+}
+Tile Ghost::findNearestTile()
+{
+	std::unordered_map<Vec2<int>, Tile&, Vec2<int>::Vei2Hasher> neighbouringTiles = getNeighbouringTiles();
 	Tile nearestTile;
 	int minDistance = 1e9;
 	for (auto i = neighbouringTiles.begin(); i != neighbouringTiles.end(); i++) {

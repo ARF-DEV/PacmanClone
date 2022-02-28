@@ -42,6 +42,7 @@ void Game::resetGame()
 	gh1.setHomePos(map.getGhostSpawns()[0]);
 	pacman.reset();
 	pacman.setCenterPos(map.getPlayerSpawn());
+	map.reset();
 }
 
 
@@ -115,9 +116,6 @@ void Game::update()
 	case Game::GameState::gameplay:
 		pacman.update();
 		gh1.update();
-
-		// IMPLEMENT TIMER FOR FRIGHTENED IN GHOST
-
 		break;
 	case Game::GameState::gameover:
 		break;
@@ -142,8 +140,8 @@ void Game::lateUpdate()
 		for (Coin& coin : listOfCoin) {
 			if (!coin.isEaten() && isColliding(pacman.getCollisionRect(), coin.getCollisionRect())) {
 				if (coin.isBigCoin()) {
-					gh1.flip();
-					gh1.setState(Ghost::GhostState::Frightened);
+					if (!gh1.isEaten())
+						gh1.frightened();
 				}
 				coin.setEaten(true);
 				++coinAmount;

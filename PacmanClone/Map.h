@@ -35,6 +35,11 @@ public:
 	void loadMapFromVector(std::vector<int> mapVector, Animation&& coinAnim, Animation&& bigCoinAnim, int _mapWidth, int _mapHeight);
 	void draw(Renderer& renderer);
 	int getTileSize();
+	void reset() {
+		for (auto& coin : listOfCoin) {
+			coin.setEaten(false);
+		}
+	}
 	Vec2<int> getTopLeft() {
 		return topLeft;
 	}

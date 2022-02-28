@@ -27,7 +27,9 @@ public:
 		pacman(pacman),
 		scatterTargetPos(scatterTargetPos),
 		processTargetPosFunc(processTargetPosFunc),
-		homePos(_topLeft)
+		homePos(_topLeft),
+		frightenedTimer(10.0f),
+		scatterTimer(10.0f)
 	{
 		std::cout << sizeof(animations) / sizeof(std::unique_ptr<Animation>) << std::endl;
 	}
@@ -50,7 +52,16 @@ public:
 		homePos = _homePos;
 	}
 	void flip() {
-		turnPoint = map.getTile(getCenter()).getCenter();
+		auto neighbouringTiles = getNeighbouringTiles();
+		Tile targetTile = map.getTile(getCenter());
+		int minDistance = 1e9;
+		for (auto i = neighbouringTiles.begin(); i != neighbouringTiles.end(); i++) {
+			if (i->first == -dir && !i->second.checkFlags(Tile::TileState::Wall)) {
+				targetTile = i->second;
+				break;
+			}
+		}
+		turnPoint = targetTile.getCenter();
 		dir = -dir;
 	}
 	bool isEaten() {
@@ -62,11 +73,25 @@ public:
 	bool isFrightened() {
 		return state == GhostState::Frightened;
 	}
+
+	void scatter() {
+		scatterTimer.resetTimePass();
+		flip();
+		state = Ghost::GhostState::Scatter;
+	}
+	void frightened() {
+		frightenedTimer.resetTimePass();
+		flip();
+		state = Ghost::GhostState::Frightened;
+	}
+	std::unordered_map<Vec2<int>, Tile&, Vec2<int>::Vei2Hasher> getNeighbouringTiles();
 private:
 	GhostState state = GhostState::Chase;
 	Pacman& pacman;
 	Map& map;
 	float turnThreshold = 0.5f;
+	Timer frightenedTimer;
+	Timer scatterTimer;
 	std::random_device rd;
 	std::mt19937 rng{rd()};
 	std::function<Vec2<int>(Pacman& pacman)> processTargetPosFunc = nullptr;
