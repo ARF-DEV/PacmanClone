@@ -148,6 +148,7 @@ void Game::lateUpdate()
 				std::cout << coinAmount << '\n';
 			}
 		}
+
 		if (isColliding(gh1.getCollisionRect(), pacman.getCollisionRect())) {
 			if (gh1.isFrightened())
 			{

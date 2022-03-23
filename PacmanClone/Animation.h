@@ -27,5 +27,5 @@ private:
 	bool isLooping = true;
 
 	Texture& texture;
-	Timer timer{0.1f};
+	Timer timer{0.05f};
 };

@@ -100,5 +100,5 @@ private:
 	Vec2<int> target;
 	Vec2<int> scatterTargetPos;
 	Vec2<int> homePos;
-	
+	int speed = 2;
 };

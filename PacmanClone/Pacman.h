@@ -36,7 +36,8 @@ private:
 	Vec2<int> dir;
 	Vec2<int> turnPoint;
 	Vec2<int> savedDir;
-	float turnThreshold = 1.5f;
+	float turnThreshold = 4;
 	Map& map;
 	bool dead = false;
+	int speed = 2;
 };

@@ -78,7 +78,8 @@ void Pacman::update()
 		savedDir == Vec2<int>{1, 0}&& map.getRightTile(getCenter()).checkFlags(Tile::TileState::Road) > 0
 		) {
 		if ((turnPoint - getCenter()).getLength() <= turnThreshold) {
-			dir = savedDir;
+			setCenterPos(turnPoint + (savedDir * speed * 2));
+			dir = savedDir ;
 			savedDir = { 0,0 };
 			turnPoint = { -1, -1 };
 		}
@@ -96,7 +97,7 @@ void Pacman::update()
 void Pacman::lateUpdate()
 {
 	if (!map.wallInfront(getCenter(), dir)) {
-		topLeft += dir;
+		topLeft += dir * speed;
 	}
 }
 

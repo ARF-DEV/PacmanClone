@@ -148,5 +148,5 @@ void Ghost::moveToPos(Vec2<int> pos)
 {
 	dir = (pos - getCenter()).normalize();
 
-	setCenterPos(getCenter() + (dir * 1));
+	setCenterPos(getCenter() + (dir * speed));
 }
