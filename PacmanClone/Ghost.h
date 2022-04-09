@@ -10,7 +10,6 @@
 #include "Animation.h"
 #include "Pacman.h"
 #include <functional>
-
 class Ghost : public Entity {
 public:
 	enum class GhostState
@@ -20,7 +19,7 @@ public:
 		Frightened,
 		Eaten
 	};
-	Ghost(Vec2<int> _topLeft, Animation&& anim, SDL_Rect collisionRect, Map& _map, Pacman& pacman, Vec2<int> chaseTargetPos, std::function<Vec2<int>(Pacman& pacman)> processTargetPosFunc)
+	Ghost(Vec2<int> _topLeft, Animation&& anim, SDL_Rect collisionRect, Map& _map, Pacman& pacman, Vec2<int> chaseTargetPos, std::function<Vec2<int>()> processTargetPosFunc)
 		:
 		Entity(_topLeft, std::move(anim), collisionRect),
 		map(_map),
@@ -84,6 +83,12 @@ public:
 		flip();
 		state = Ghost::GhostState::Frightened;
 	}
+	void setScatterTarget(Vec2<int> pos) {
+		scatterTargetPos = pos;
+	}
+	Vec2<int> getScatterTarget() {
+		return scatterTargetPos;
+	}
 	std::unordered_map<Vec2<int>, Tile&, Vec2<int>::Vei2Hasher> getNeighbouringTiles();
 private:
 	GhostState state = GhostState::Chase;
@@ -94,7 +99,7 @@ private:
 	Timer scatterTimer;
 	std::random_device rd;
 	std::mt19937 rng{rd()};
-	std::function<Vec2<int>(Pacman& pacman)> processTargetPosFunc = nullptr;
+	std::function<Vec2<int>()> processTargetPosFunc = nullptr;
 	Vec2<int> dir = { 0, 0 };
 	Vec2<int> turnPoint;
 	Vec2<int> target;

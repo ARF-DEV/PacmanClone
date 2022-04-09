@@ -46,7 +46,7 @@ void Ghost::update()
 		{
 		case Ghost::GhostState::Chase:
 		{
-			Vec2<int> a = processTargetPosFunc(pacman);
+			Vec2<int> a = processTargetPosFunc();
 			setTarget(a);
 			break;
 		}

@@ -40,6 +40,19 @@ void Game::resetGame()
 	gh1.reset();
 	gh1.setCenterPos(map.getGhostSpawns()[0]);
 	gh1.setHomePos(map.getGhostSpawns()[0]);
+	
+	gh2.reset();
+	gh2.setCenterPos(map.getGhostSpawns()[1]);
+	gh2.setHomePos(map.getGhostSpawns()[1]);
+
+	gh3.reset();
+	gh3.setCenterPos(map.getGhostSpawns()[2]);
+	gh3.setHomePos(map.getGhostSpawns()[2]);
+
+	gh4.reset();
+	gh4.setCenterPos(map.getGhostSpawns()[3]);
+	gh4.setHomePos(map.getGhostSpawns()[3]);
+
 	pacman.reset();
 	pacman.setCenterPos(map.getPlayerSpawn());
 	map.reset();
@@ -116,6 +129,9 @@ void Game::update()
 	case Game::GameState::gameplay:
 		pacman.update();
 		gh1.update();
+		gh2.update();
+		gh3.update();
+		gh4.update();
 		break;
 	case Game::GameState::gameover:
 		break;
@@ -142,6 +158,12 @@ void Game::lateUpdate()
 				if (coin.isBigCoin()) {
 					if (!gh1.isEaten())
 						gh1.frightened();
+					if (!gh2.isEaten())
+						gh2.frightened();
+					if (!gh3.isEaten())
+						gh3.frightened();
+					if (!gh4.isEaten())
+						gh4.frightened();
 				}
 				coin.setEaten(true);
 				++coinAmount;
@@ -161,6 +183,45 @@ void Game::lateUpdate()
 				
 			}
 			
+		}
+		if (isColliding(gh2.getCollisionRect(), pacman.getCollisionRect())) {
+			if (gh2.isFrightened())
+			{
+				gh2.setState(Ghost::GhostState::Eaten);
+				gh2.flip();
+			}
+			else if (!gh2.isEaten()) {
+				pacman.deadIsTrue();
+				state = GameState::gameover;
+
+			}
+
+		}
+		if (isColliding(gh3.getCollisionRect(), pacman.getCollisionRect())) {
+			if (gh3.isFrightened())
+			{
+				gh3.setState(Ghost::GhostState::Eaten);
+				gh3.flip();
+			}
+			else if (!gh3.isEaten()) {
+				pacman.deadIsTrue();
+				state = GameState::gameover;
+
+			}
+
+		}
+		if (isColliding(gh4.getCollisionRect(), pacman.getCollisionRect())) {
+			if (gh4.isFrightened())
+			{
+				gh4.setState(Ghost::GhostState::Eaten);
+				gh4.flip();
+			}
+			else if (!gh4.isEaten()) {
+				pacman.deadIsTrue();
+				state = GameState::gameover;
+
+			}
+
 		}
 		break;
 
@@ -194,6 +255,9 @@ void Game::draw()
 		map.draw(renderer);
 		pacman.draw(renderer);
 		gh1.draw(renderer);
+		gh2.draw(renderer);
+		gh3.draw(renderer);
+		gh4.draw(renderer);
 		break;
 	case Game::GameState::gameover:
 		gameOverTextTexture.renderTexture(512 - gameOverTextTexture.getWidth() / 2, 100, renderer.getRenderer());
