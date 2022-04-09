@@ -49,6 +49,10 @@ public:
 		gh1.addAnimation(Entity::AnimState::LEFT, std::make_unique<Animation>(std::move(Animation(pacmanSprite, 64, 80, 16, 16, 32, 32, 2))));
 		gh1.addAnimation(Entity::AnimState::RIGHT, std::make_unique<Animation>(std::move(Animation(pacmanSprite, 96, 80, 16, 16, 32, 32, 2))));
 		gh1.addAnimation(Entity::AnimState::FRIGHTENED, std::make_unique<Animation>(std::move(Animation(pacmanSprite, 0, 144, 16, 16, 32, 32, 2))));
+		gh1.addAnimation(Entity::AnimState::G_EATEN_UP, std::make_unique<Animation>(std::move(Animation(pacmanSprite, 0, 160, 16, 16, 32, 32, 1))));
+		gh1.addAnimation(Entity::AnimState::G_EATEN_DOWN, std::make_unique<Animation>(std::move(Animation(pacmanSprite, 16, 160, 16, 16, 32, 32, 1))));
+		gh1.addAnimation(Entity::AnimState::G_EATEN_LEFT, std::make_unique<Animation>(std::move(Animation(pacmanSprite, 32, 160, 16, 16, 32, 32, 1))));
+		gh1.addAnimation(Entity::AnimState::G_EATEN_RIGHT, std::make_unique<Animation>(std::move(Animation(pacmanSprite, 48, 160, 16, 16, 32, 32, 1))));
 		init();
 	}
 	Game(const Game& other) = delete;

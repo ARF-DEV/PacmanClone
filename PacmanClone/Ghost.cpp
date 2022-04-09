@@ -67,9 +67,10 @@ void Ghost::update()
 			}
 			break;
 		}
-		case Ghost::GhostState::Eaten:
+		case Ghost::GhostState::Eaten: {
 			setTarget(homePos);
 			break;
+		}
 		default:
 			break;
 		}
@@ -79,7 +80,7 @@ void Ghost::update()
 		turnPoint = nextTargetTile.getCenter();
 	}
 	
-	if (state != GhostState::Frightened) {
+	if (state != GhostState::Frightened && state != GhostState::Eaten) {
 		if (currentAnimation != AnimState::UP && dir == Vec2<int>{0, -1}) {
 			currentAnimation = AnimState::UP;
 		}
@@ -91,6 +92,21 @@ void Ghost::update()
 		}
 		else if (currentAnimation != AnimState::RIGHT && dir == Vec2<int>{1, 0}) {
 			currentAnimation = AnimState::RIGHT;
+		}
+	}
+	else if (state == GhostState::Eaten) {
+		if (currentAnimation != AnimState::G_EATEN_UP && dir == Vec2<int>{0, -1}) {
+			std::cout << "test\n";
+			currentAnimation = AnimState::G_EATEN_UP;
+		}
+		else if (currentAnimation != AnimState::G_EATEN_DOWN && dir == Vec2<int>{0, 1}) {
+			currentAnimation = AnimState::G_EATEN_DOWN;
+		}
+		else if (currentAnimation != AnimState::G_EATEN_LEFT && dir == Vec2<int>{-1, 0}) {
+			currentAnimation = AnimState::G_EATEN_LEFT;
+		}
+		else if (currentAnimation != AnimState::G_EATEN_RIGHT && dir == Vec2<int>{1, 0}) {
+			currentAnimation = AnimState::G_EATEN_RIGHT;
 		}
 	}
 	else {

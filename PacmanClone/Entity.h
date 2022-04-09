@@ -2,12 +2,14 @@
 #include<SDL.h>
 #include<vector>
 #include<memory>
+#include<array>
 
 #include"Texture.h"
 #include"Animation.h"
 #include"Vec2.h"
 #include"Texture.h"
 #include"Renderer.h"
+
 class Entity {
 public:
 	enum class AnimState {
@@ -19,6 +21,10 @@ public:
 		FRIGHTENED,
 		GHOST_COUNT,
 		BIG_COIN,
+		G_EATEN_UP,
+		G_EATEN_DOWN,
+		G_EATEN_LEFT,
+		G_EATEN_RIGHT,
 		G_COUNT,
 	};
 public:
