@@ -2,10 +2,11 @@
 
 This is my first big project (for me) in C++
 
-Gameplay Reference : 
+### Gameplay Reference : 
 https://www.youtube.com/watch?v=dScq4P5gn4A&ab_channel=OldClassicRetroGaming
+https://www.youtube.com/watch?v=ataGotQ7ir8&t=757s
 
-Checkpoints :
+### Checkpoints :
 - [x] Game Class :
 	- [x] MainGame Loop
 	- [x] GameState
@@ -38,7 +39,6 @@ Checkpoints :
 	- [ ] Soundeffect
 
 ### Screenshot :
-
 Main Menu : 
 ![image](https://user-images.githubusercontent.com/33253103/162602579-e09426fa-dfae-4188-bd8c-8b6312ba113d.png)
 
