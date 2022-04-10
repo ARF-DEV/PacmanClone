@@ -43,9 +43,10 @@ Main Menu :
 ![image](https://user-images.githubusercontent.com/33253103/162602579-e09426fa-dfae-4188-bd8c-8b6312ba113d.png)
 
 Gameplay : 
-![image](https://user-images.githubusercontent.com/33253103/162602591-17f2396c-49e3-436a-8da0-ef791949073f.png)
+![image](https://user-images.githubusercontent.com/33253103/162602641-8f2c315a-0c4e-4365-b9ff-b813a9beb8e3.png)
 
 Game Over Screen : 
-![image](https://user-images.githubusercontent.com/33253103/162602596-29bb08b2-c1f5-4bc7-b018-0cc425014358.png)
+![image](https://user-images.githubusercontent.com/33253103/162602643-d47ca351-1808-465f-8968-95f105a82419.png)
+
 
 
