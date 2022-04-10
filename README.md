@@ -1,6 +1,6 @@
 # PacmanClone(C++/SDL2) 
 
-This is my first big project (for me) in C++
+This is my first big project (in my perspective) in C++
 
 ### Gameplay Reference : 
 - [Arcade Game: Pac-Man (1980 Namco (Midway License for US release))
