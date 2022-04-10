@@ -1,5 +1,7 @@
 # PacmanClone(C++/SDL2) 
 
+This is my first big project (for me) in C++
+
 Gameplay Reference : 
 https://www.youtube.com/watch?v=dScq4P5gn4A&ab_channel=OldClassicRetroGaming
 
@@ -34,3 +36,16 @@ Checkpoints :
 - [x] Coin Class
 - [ ] Sounds System Class
 	- [ ] Soundeffect
+
+### Screenshot :
+
+Main Menu : 
+![image](https://user-images.githubusercontent.com/33253103/162602579-e09426fa-dfae-4188-bd8c-8b6312ba113d.png)
+
+Gameplay : 
+![image](https://user-images.githubusercontent.com/33253103/162602591-17f2396c-49e3-436a-8da0-ef791949073f.png)
+
+Game Over Screen : 
+![image](https://user-images.githubusercontent.com/33253103/162602596-29bb08b2-c1f5-4bc7-b018-0cc425014358.png)
+
+
