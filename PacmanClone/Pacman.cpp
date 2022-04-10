@@ -105,12 +105,15 @@ void Pacman::draw(Renderer& renderer)
 {
 	if (!dead) {
 		Entity::draw(renderer);
+
+		#if PA_DEBUG == 1
 		SDL_Rect rect = {turnPoint.x, turnPoint.y, animations[(int)currentAnimation]->getWidth()/4 ,animations[(int)currentAnimation]->getHeight()/4};
 		SDL_SetRenderDrawColor(renderer.getRenderer(), 0x0, 0xFF, 0x0, 0xFF);
 		SDL_RenderFillRect(renderer.getRenderer(), &rect);
 		SDL_Rect renderColRect = getCollisionRect();
 		SDL_SetRenderDrawColor(renderer.getRenderer(), 0xFF, 0x0, 0x0, 0xFF);
 		SDL_RenderDrawRect(renderer.getRenderer(), &renderColRect);
+		#endif
 	}
 
 }

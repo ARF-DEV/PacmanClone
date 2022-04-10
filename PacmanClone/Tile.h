@@ -59,11 +59,13 @@ public:
 			SDL_RenderFillRect(renderer.getRenderer(), &drawRect);
 		}
 
+		#if PA_DEBUG == 1
 		if ((flags & TileState::Road) > 0) {
 			const SDL_Rect drawRect = { pos.x, pos.y, width, height };
 			SDL_SetRenderDrawColor(renderer.getRenderer(), 0xFF, 0x0, 0x0, 0xFF);
 			SDL_RenderDrawRect(renderer.getRenderer(), &drawRect);
 		}
+		#endif
 
 	}
 

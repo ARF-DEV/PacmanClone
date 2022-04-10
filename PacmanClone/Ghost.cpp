@@ -119,7 +119,8 @@ void Ghost::update()
 void Ghost::draw(Renderer& renderer)
 {
 	Entity::draw(renderer);
-
+	
+	#if PA_DEBUG == 1
 	SDL_Rect rect = { target.x, target.y, animations[(int)currentAnimation]->getWidth() / 4 ,animations[(int)currentAnimation]->getHeight() / 4 };
 	SDL_SetRenderDrawColor(renderer.getRenderer(), 0x0, 0x0, 0xFF, 0xFF);
 	SDL_RenderFillRect(renderer.getRenderer(), &rect);
@@ -130,6 +131,7 @@ void Ghost::draw(Renderer& renderer)
 	SDL_Rect p = { turnPoint.x, turnPoint.y, animations[(int)currentAnimation]->getWidth() / 4 ,animations[(int)currentAnimation]->getHeight() / 4 };
 	SDL_SetRenderDrawColor(renderer.getRenderer(), 0xFF, 0xFF, 0xFF, 0xFF);
 	SDL_RenderFillRect(renderer.getRenderer(), &p);
+	#endif
 }
 std::unordered_map<Vec2<int>, Tile&, Vec2<int>::Vei2Hasher> Ghost::getNeighbouringTiles() {
 	std::unordered_map<Vec2<int>, Tile&, Vec2<int>::Vei2Hasher> neighbouringTiles{
