@@ -55,7 +55,7 @@ public:
 		//std::cout << "draw at" << "{" << pos.x << "," << pos.y << "}" << '\n';
 		if ((flags & TileState::Wall) > 0) {
 			const SDL_Rect drawRect = { pos.x, pos.y, width, height };
-			SDL_SetRenderDrawColor(renderer.getRenderer(), 0xFF, 0x0, 0x0, 0xFF);
+			SDL_SetRenderDrawColor(renderer.getRenderer(), 0x0, 0x0, 0xFF, 0xFF);
 			SDL_RenderFillRect(renderer.getRenderer(), &drawRect);
 		}
 
