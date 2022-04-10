@@ -3,8 +3,9 @@
 This is my first big project (for me) in C++
 
 ### Gameplay Reference : 
-https://www.youtube.com/watch?v=dScq4P5gn4A&ab_channel=OldClassicRetroGaming
-https://www.youtube.com/watch?v=ataGotQ7ir8&t=757s
+- [Arcade Game: Pac-Man (1980 Namco (Midway License for US release))
+](https://www.youtube.com/watch?v=dScq4P5gn4A&ab_channel=OldClassicRetroGaming)
+- [Pac-Man Ghost AI Explained](https://www.youtube.com/watch?v=ataGotQ7ir8&t=757s)
 
 ### Checkpoints :
 - [x] Game Class :
