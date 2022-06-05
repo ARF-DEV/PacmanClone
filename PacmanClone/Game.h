@@ -23,13 +23,14 @@ private:
 		menu,
 		gameplay,
 		gameover,
+		win,
 		quit
 	};
 public:
 	void run();
 	Game()
 		:
-		window("testing"),
+		window("Pacmon"),
 		pacmanSprite("assets/pacmanSprite.png", renderer.getRenderer()),
 		coinSpriteSheet("assets/coin.png", renderer.getRenderer()),
 		bigCoinSpriteSheet("assets/bigCoin.png", renderer.getRenderer()),
@@ -134,6 +135,7 @@ private:
 	Texture pressEnterToStartTexture;
 	Texture pressEnterToRestartTexture;
 	Texture gameOverTextTexture;
+	Texture winGameTextTexture;
 	SDL_Color textColor;
 	Map map;
 	Pacman pacman;

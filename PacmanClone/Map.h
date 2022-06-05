@@ -49,6 +49,15 @@ public:
 	std::vector<Coin>& getListOfVector() {
 		return listOfCoin;
 	}
+	bool isNoCoinLeft() {
+		bool isTrue = true;
+		for (auto& ent : listOfCoin) {
+			if (!ent.isEaten()) {
+				isTrue = false;
+			}
+		}
+		return isTrue;
+	}
 	std::vector<Tile> getNeibouringRoads(Vec2<int> pos);
 private:
 	Vec2<int> topLeft;

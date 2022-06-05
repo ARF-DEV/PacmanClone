@@ -45,6 +45,7 @@ public:
 		dir = { 0, 0 };
 		target = { 0, 0 };
 		turnPoint = { 0, 0 };
+		setState(Ghost::GhostState::Chase);
 	}
 
 	void setHomePos(Vec2<int> _homePos) {

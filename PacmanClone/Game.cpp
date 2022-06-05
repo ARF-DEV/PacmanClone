@@ -87,6 +87,7 @@ void Game::start()
 	minecraftFont = TTF_OpenFont("assets/Minecraft.ttf", 24);
 	startTextTexture.createTextureFromText(renderer.getRenderer(), gFont, "PACMAN", { 255, 255, 255 });
 	gameOverTextTexture.createTextureFromText(renderer.getRenderer(), gFont, "GameOver", { 255, 255, 255 });
+	winGameTextTexture.createTextureFromText(renderer.getRenderer(), gFont, "You Win", { 255, 255, 255 });
 	pressEnterToRestartTexture.createTextureFromText(renderer.getRenderer(), minecraftFont, "Press Enter To Restart", { 255, 255, 255 });
 	pressEnterToStartTexture.createTextureFromText(renderer.getRenderer(), minecraftFont, "Press Enter to Start", { 255, 255, 255 });
 	//pacman.setCenterPos({ 0, 0 });
@@ -110,6 +111,10 @@ void Game::update()
 					state = Game::GameState::gameplay;
 					break;
 				case Game::GameState::gameover:
+					resetGame();
+					state = Game::GameState::gameplay;
+					break;
+				case Game::GameState::win:
 					resetGame();
 					state = Game::GameState::gameplay;
 					break;
@@ -169,6 +174,10 @@ void Game::lateUpdate()
 				++coinAmount;
 				std::cout << coinAmount << '\n';
 			}
+		}
+
+		if (map.isNoCoinLeft()) {
+			state = GameState::win;
 		}
 
 		if (isColliding(gh1.getCollisionRect(), pacman.getCollisionRect())) {
@@ -243,7 +252,6 @@ void Game::draw()
 	SDL_SetRenderDrawColor(renderer.getRenderer(), 0x0, 0x0, 0x0, 0xFF);
 	SDL_RenderClear(renderer.getRenderer());
 
-	//REAL DRAWING SHIT HAPPENS HERE
 
 	switch (state)
 	{
@@ -261,6 +269,10 @@ void Game::draw()
 		break;
 	case Game::GameState::gameover:
 		gameOverTextTexture.renderTexture(512 - gameOverTextTexture.getWidth() / 2, 100, renderer.getRenderer());
+		pressEnterToRestartTexture.renderTexture(512 - pressEnterToRestartTexture.getWidth() / 2, 300, renderer.getRenderer());
+		break;
+	case Game::GameState::win:
+		winGameTextTexture.renderTexture(512 - winGameTextTexture.getWidth() / 2, 100, renderer.getRenderer());
 		pressEnterToRestartTexture.renderTexture(512 - pressEnterToRestartTexture.getWidth() / 2, 300, renderer.getRenderer());
 		break;
 	case Game::GameState::quit:
